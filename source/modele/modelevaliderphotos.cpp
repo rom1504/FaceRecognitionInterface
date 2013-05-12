@@ -1,13 +1,13 @@
-#include "modeleafficherphotos.h"
+#include "modelevaliderphotos.h"
 #include <iostream>
 
-ModeleAfficherPhotos::ModeleAfficherPhotos(QList<Photo*> photos,QObject *parent) :
+ModeleValiderPhotos::ModeleValiderPhotos(QList<Photo*> photos,QObject *parent) :
     QAbstractListModel(parent),mPhotos(photos)
 {
     for(int i=0;i<mPhotos.size();i++) mValides<<true;
 }
 
-QVariant ModeleAfficherPhotos::data ( const QModelIndex & index, int role) const
+QVariant ModeleValiderPhotos::data ( const QModelIndex & index, int role) const
 {
     if (!index.isValid())
          return QVariant();
@@ -28,7 +28,7 @@ QVariant ModeleAfficherPhotos::data ( const QModelIndex & index, int role) const
      else return QVariant();
 }
 
-bool ModeleAfficherPhotos::setData ( const QModelIndex & index, const QVariant & value, int role)
+bool ModeleValiderPhotos::setData ( const QModelIndex & index, const QVariant & value, int role)
 {
     if (index.isValid() && role == Qt::CheckStateRole)
     {
@@ -42,17 +42,17 @@ bool ModeleAfficherPhotos::setData ( const QModelIndex & index, const QVariant &
     return false;
 }
 
-Qt::ItemFlags ModeleAfficherPhotos::flags ( const QModelIndex & index ) const
+Qt::ItemFlags ModeleValiderPhotos::flags ( const QModelIndex & index ) const
 {
     return index.column()==0 ? Qt::ItemIsEnabled|Qt::ItemIsUserCheckable : Qt::ItemIsEnabled;
 }
 
-int ModeleAfficherPhotos::rowCount (const QModelIndex &) const
+int ModeleValiderPhotos::rowCount (const QModelIndex &) const
 {
     return mPhotos.size();
 }
 
-QList<bool> ModeleAfficherPhotos::valides() const
+QList<bool> ModeleValiderPhotos::valides() const
 {
     return mValides;
 }

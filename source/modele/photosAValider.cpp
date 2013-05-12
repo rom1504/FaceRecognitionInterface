@@ -1,12 +1,12 @@
-#include "photos.h"
+#include "photosAValider.h"
 #include <QDir>
 #include <cmath>
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
 
-Photos::Photos(QString dossierSortie, QString dossierValide, QObject *parent) :
-    QObject(parent),mDossierSortie(dossierSortie),mDossierValide(dossierValide)
+PhotosAValider::PhotosAValider(QString dossierSortie, QString dossierValide, QObject *parent) :
+    Photos(parent),mDossierSortie(dossierSortie),mDossierValide(dossierValide)
 {
     QFile fichierPhotosDejaValides("photosDejaValides.txt");
     fichierPhotosDejaValides.open(QIODevice::ReadOnly|QIODevice::Text);
@@ -15,12 +15,12 @@ Photos::Photos(QString dossierSortie, QString dossierValide, QObject *parent) :
     fichierPhotosDejaValides.close();
 }
 
-void Photos::ajouterPhoto(QString nomFichier,QString personne)
+void PhotosAValider::ajouterPhoto(QString nomFichier,QString personne)
 {
-    mPhotos[personne]<<new Photo(nomFichier,personne,mDossierSortie);
+    Photos::ajouterPhoto(nomFichier,personne,mDossierSortie);
 }
 
-bool Photos::valider(QString personne,QList<bool> valides)
+bool PhotosAValider::valider(QString personne,QList<bool> valides)
 {
     QFile fichierPhotosDejaValides("photosDejaValides.txt");
     fichierPhotosDejaValides.open(QIODevice::WriteOnly|QIODevice::Text|QIODevice::Append);
@@ -39,34 +39,23 @@ bool Photos::valider(QString personne,QList<bool> valides)
     for(int i=0;i<valides.size();i++) listeComplete.removeFirst();
     if(listeComplete.isEmpty())
     {
+        int debut=mPersonnes.indexOf(personne);
+        int fin=mPersonnes.lastIndexOf(personne);
+        emit beginRemoveRows(debut,fin);
         mPhotos.remove(personne);
         mPersonnes.removeAll(personne);
-        emit dataChanged();
+        emit endRemoveRows();
         return true;
     }
     return false;
 }
 
-void Photos::chargerPhotos()
+void PhotosAValider::chargerPhotos()
 {
-    QDir dir(mDossierSortie);
-    for(QString personne : dir.entryList(QDir::Dirs))
-    {
-        if(personne!="." && personne!="..")
-        {
-            QDir dirPersonne(mDossierSortie+"/"+personne);
-            for(QString nomFichier : dirPersonne.entryList(QDir::Files)) if(!mPhotosDejaValides.contains(personne+"/"+nomFichier)) ajouterPhoto(nomFichier,personne);
-            if(mPhotos.contains(personne)) mPersonnes<<personne;
-        }
-    }
+    Photos::chargerPhotos(mDossierSortie,[this](QString chemin){return !mPhotosDejaValides.contains(chemin);});
 }
 
-const QList<QString> & Photos::personnes() const
-{
-    return mPersonnes;
-}
-
-QList<Photo*> Photos::premieresPhotosDe(QString personne,int nombre) const
+QList<Photo*> PhotosAValider::premieresPhotosDe(QString personne,int nombre) const
 {
     const QList<Photo*> & listeComplete=mPhotos[personne];
     int taille=std::min(nombre,listeComplete.size());

@@ -4,30 +4,49 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = FaceRecognitionInterface
+TARGET = bin/FaceRecognitionInterface
 TEMPLATE = app
+OBJECTS_DIR = temp/
+MOC_DIR = $$OBJECTS_DIR
+RCC_DIR = $$OBJECTS_DIR
+UI_DIR = $$OBJECTS_DIR
+
+VPATH = source/
+
+INCLUDEPATH = source/
 
 
 SOURCES += main.cpp \
     vue/mainwindow.cpp \
     controleur/controleur.cpp \
     modele/photo.cpp \
-    modele/photos.cpp \
+    modele/modeleafficherpersonne.cpp \
+    vue/afficherpersonnes.cpp \
+    modele/modelevaliderphotos.cpp \
+    vue/validerphotos.cpp \
+    vue/afficherphotos.cpp \
     modele/modeleafficherphotos.cpp \
-    modele/modeleafficherpersonne.cpp
+    modele/photosAValider.cpp \
+    modele/photos.cpp
 
 HEADERS  += vue/mainwindow.h \
     controleur/controleur.h \
     modele/photo.h \
-    modele/photos.h \
+    modele/modeleafficherpersonne.h \
+    vue/afficherpersonnes.h \
+    modele/modelevaliderphotos.h \
+    vue/validerphotos.h \
+    vue/afficherphotos.h \
     modele/modeleafficherphotos.h \
-    modele/modeleafficherpersonne.h
+    modele/photosAValider.h \
+    modele/photos.h
 
-FORMS    += vue/mainwindow.ui
+FORMS    += vue/mainwindow.ui \
+    vue/afficherpersonnes.ui \
+    vue/validerphotos.ui \
+    vue/afficherphotos.ui
 
 OTHER_FILES += \
     description.txt \

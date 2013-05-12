@@ -1,14 +1,14 @@
-#ifndef MODELEAFFICHERPHOTOS_H
-#define MODELEAFFICHERPHOTOS_H
+#ifndef MODELEVALIDERPHOTOS_H
+#define MODELEVALIDERPHOTOS_H
 
 #include <QAbstractListModel>
 #include "modele/photo.h"
 
-class ModeleAfficherPhotos : public QAbstractListModel
+class ModeleValiderPhotos : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit ModeleAfficherPhotos(QList<Photo*> photos,QObject *parent = 0);
+    explicit ModeleValiderPhotos(QList<Photo*> photos,QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     int rowCount (const QModelIndex & = QModelIndex()) const;
     bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole ) ;
@@ -23,4 +23,4 @@ private:
     
 };
 
-#endif // MODELEAFFICHERPHOTOS_H
+#endif // MODELEVALIDERPHOTOS_H
