@@ -41,6 +41,8 @@
     </property>
     <addaction name="actionVerifier_reconnaissance"/>
     <addaction name="actionAfficher_photos"/>
+    <addaction name="actionDetecter_les_visages"/>
+    <addaction name="actionReconnaitre_manuellement"/>
    </widget>
    <addaction name="menuFichier"/>
   </widget>
@@ -67,6 +69,16 @@
   <action name="actionAfficher_photos">
    <property name="text">
     <string>Afficher photos</string>
+   </property>
+  </action>
+  <action name="actionDetecter_les_visages">
+   <property name="text">
+    <string>Détecter les visages</string>
+   </property>
+  </action>
+  <action name="actionReconnaitre_manuellement">
+   <property name="text">
+    <string>Reconnaitre manuellement</string>
    </property>
   </action>
  </widget>

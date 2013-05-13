@@ -5,7 +5,7 @@ Controleur::Controleur(QObject *parent) :
 {
     mMainWindow=new MainWindow();
     mPhotosAffichees=new Photos();
-    mPhotosAffichees->chargerPhotos("valide");
+    mPhotosAffichees->chargerPhotos("donnees/valide");
     mMainWindow->setModelAfficherPersonne(new ModeleAfficherPersonne(mPhotosAffichees),true);
 
     connect(mMainWindow,&MainWindow::validerPersonne,[this](QString personne){
@@ -24,7 +24,7 @@ Controleur::Controleur(QObject *parent) :
 
     connect(mMainWindow,&MainWindow::afficherPhotos,[this](){
         mPhotosAffichees=new Photos();
-        mPhotosAffichees->chargerPhotos("valide");
+        mPhotosAffichees->chargerPhotos("donnees/valide");
         mMainWindow->setModelAfficherPersonne(new ModeleAfficherPersonne(mPhotosAffichees),true);
     });
 

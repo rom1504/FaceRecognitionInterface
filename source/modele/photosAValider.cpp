@@ -8,7 +8,7 @@
 PhotosAValider::PhotosAValider(QString dossierSortie, QString dossierValide, QObject *parent) :
     Photos(parent),mDossierSortie(dossierSortie),mDossierValide(dossierValide)
 {
-    QFile fichierPhotosDejaValides("photosDejaValides.txt");
+    QFile fichierPhotosDejaValides("donnees/photosDejaValides.txt");
     fichierPhotosDejaValides.open(QIODevice::ReadOnly|QIODevice::Text);
     QTextStream flux(&fichierPhotosDejaValides);
     while(!flux.atEnd()) mPhotosDejaValides<<flux.readLine();
@@ -22,7 +22,7 @@ void PhotosAValider::ajouterPhoto(QString nomFichier,QString personne)
 
 bool PhotosAValider::valider(QString personne,QList<bool> valides)
 {
-    QFile fichierPhotosDejaValides("photosDejaValides.txt");
+    QFile fichierPhotosDejaValides("donnees/photosDejaValides.txt");
     fichierPhotosDejaValides.open(QIODevice::WriteOnly|QIODevice::Text|QIODevice::Append);
     QTextStream flux(&fichierPhotosDejaValides);
     const QList<Photo*> photos=premieresPhotosDe(personne);

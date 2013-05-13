@@ -12,7 +12,7 @@ class PhotosAValider : public Photos
 {
     Q_OBJECT
 public:
-    explicit PhotosAValider(QString dossierSortie="sortie",QString dossierValide="valide",QObject *parent = 0);
+    explicit PhotosAValider(QString dossierSortie="donnees/sortie",QString dossierValide="donnees/valide",QObject *parent = 0);
     void ajouterPhoto(QString nomFichier, QString personne);
     void chargerPhotos();
     QList<Photo*> premieresPhotosDe(QString personne,int nombre=20) const;
