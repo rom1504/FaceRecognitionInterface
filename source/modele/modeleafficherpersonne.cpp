@@ -4,10 +4,6 @@
 ModeleAfficherPersonne::ModeleAfficherPersonne(Photos * photos,QObject *parent) :
     QAbstractListModel(parent),mPhotos(photos)
 {
-//    connect(mPhotos,&Photos::dataChanged,[this](){
-//        beginResetModel();
-//        endResetModel();// utiliser un beginRemoveRows + indexOf ?? (est ce plus efficace ? semble pas sur...)
-//    });
     connect(mPhotos,&Photos::beginRemoveRows,[this](int debut,int fin){beginRemoveRows(QModelIndex(),debut,fin);});
     connect(mPhotos,&Photos::endRemoveRows,this,&ModeleAfficherPersonne::endRemoveRows);
 }
