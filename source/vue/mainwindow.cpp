@@ -4,6 +4,7 @@
 #include "modele/modelevaliderphotos.h"
 #include "modele/modeleafficherpersonne.h"
 #include <iostream>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,6 +41,16 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->validerPhotos,&ValiderPhotos::valider,this,&MainWindow::validerPhotos);
+
+
+    connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
+        QProcess *myProcess = new QProcess();
+        QString program = "./facedetect/source/chaineSimplifie.sh";
+           QStringList arguments;
+           arguments << "donnees/photos" << "donnees/photosDecoupees"<<"donnees/informations";
+           std::cout<<"lala"<<std::endl;
+        myProcess->start(program, arguments);
+    });
 }
 
 void MainWindow::setModelAfficherPersonne(ModeleAfficherPersonne * modeleAfficherPersonne,bool afficherOuValider)
