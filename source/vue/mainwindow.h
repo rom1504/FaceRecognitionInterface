@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QProgressDialog>
 #include "modele/photos.h"
 #include "modele/modelevaliderphotos.h"
 #include "modele/modeleafficherpersonne.h"
@@ -30,10 +31,14 @@ signals:
     void verifierReconnaissance();
     void afficherPhotos();
 
+public slots:
+    void finir(int);
+
     
 private:
     Ui::MainWindow *ui;
     bool mAfficherOuValider;
+    //QProgressDialog * mProcessDialog;
 };
 
 #endif // MAINWINDOW_H

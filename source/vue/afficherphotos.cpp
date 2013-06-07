@@ -14,7 +14,7 @@ AfficherPhotos::~AfficherPhotos()
     delete ui;
 }
 
-void AfficherPhotos::setModel(ModeleAfficherPhotos * modeleValiderPhotos)
+void AfficherPhotos::setModel(ModeleAfficherPhotos * modeleAfficherPhotos)
 {
-    ui->listViewPhoto->setModel(modeleValiderPhotos);
+    ui->listViewPhoto->setModel(modeleAfficherPhotos);
 }

@@ -15,7 +15,7 @@ class AfficherPhotos : public QWidget
 public:
     explicit AfficherPhotos(QWidget *parent = 0);
     ~AfficherPhotos();
-    void setModel(ModeleAfficherPhotos * modeleValiderPhotos);
+    void setModel(ModeleAfficherPhotos * modeleAfficherPhotos);
 
 signals:
     

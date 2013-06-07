@@ -5,6 +5,7 @@
 #include "modele/modeleafficherpersonne.h"
 #include <iostream>
 #include <QProcess>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -45,12 +46,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
         QProcess *myProcess = new QProcess();
-        QString program = "./facedetect/source/chaineSimplifie.sh";
-           QStringList arguments;
-           arguments << "donnees/photos" << "donnees/photosDecoupees"<<"donnees/informations";
-           std::cout<<"lala"<<std::endl;
-        myProcess->start(program, arguments);
+        myProcess->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
+      //  mProcessDialog = new QProgressDialog("Operation in progress.", "Cancel", 0, 100);
+        connect(myProcess,SIGNAL(finished(int)),this,SLOT(finir(int)));
+      //  mProcessDialog->setValue(1);
     });
+}
+
+void MainWindow::finir(int)
+{
+ //   mProcessDialog->setValue(50);
+    QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");
 }
 
 void MainWindow::setModelAfficherPersonne(ModeleAfficherPersonne * modeleAfficherPersonne,bool afficherOuValider)
