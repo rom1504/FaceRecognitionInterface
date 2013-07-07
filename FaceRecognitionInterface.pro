@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     source/adapteur/identificationsignallistadapter.cpp \
     source/adapteur/photosignallistadapter.cpp \
     source/vue/afficheridentifications.cpp \
-    source/vue/afficherphotos.cpp
+    source/vue/afficherphotos.cpp \
+    source/vue/identificationeditor.cpp
 
 HEADERS  += vue/mainwindow.h \
     controleur/controleur.h \
@@ -53,13 +54,15 @@ HEADERS  += vue/mainwindow.h \
     source/vue/afficheridentifications.h \
     source/vue/afficherphotos.h \
     source/vue/personnemapviewer.h \
-    source/vue/personnemapviewer.hxx
+    source/vue/personnemapviewer.hxx \
+    source/vue/identificationeditor.h
 
 FORMS    += vue/mainwindow.ui \
     vue/afficherpersonnes.ui \
     source/vue/afficheridentifications.ui \
     source/vue/afficherphotos.ui \
-    source/vue/personnemapviewer.ui
+    source/vue/personnemapviewer.ui \
+    source/vue/identificationeditor.ui
 
 OTHER_FILES += \
     description.txt \

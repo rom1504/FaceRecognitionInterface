@@ -35,7 +35,6 @@ public:
      */
     Identification(QString chaine,Photo *photoAssocie,QObject * parent=0);
 
-    void joindre();
 
     /**
      * @brief identifier permet d'identifier une personne
@@ -54,6 +53,10 @@ public:
      * @brief ignorer permet d'ignorer cette identification
      */
     void ignorer();
+
+
+
+
     /**
      * @brief personne personne identifié
      * @return  nom personne
@@ -110,6 +113,10 @@ signals:
     void sidentifie();
 
 private:
+
+    void joindre();
+
+private:
     /**
      * @brief mX position en x
      */
@@ -148,5 +155,7 @@ private:
     Photo * mPhotoAssocie;
 
 };
+
+Q_DECLARE_METATYPE (Identification*)
 
 #endif // IDENTIFICATION_H

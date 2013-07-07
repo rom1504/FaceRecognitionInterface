@@ -23,5 +23,12 @@ QVariant IdentificationSignalListAdapter::data ( const QModelIndex & index, int 
         if(!image.isNull()) image=image.scaledToWidth(200);
         return image;
     }
-    else return QVariant();
+    if (role == Qt::EditRole) return QVariant::fromValue(mList->get(index.row()));
+    return QVariant();
+}
+
+Qt::ItemFlags IdentificationSignalListAdapter::flags(const QModelIndex & index) const
+{
+    Identification * identification=mList->get(index.row());
+    return identification->valide() && identification->identifie() ?  Qt::ItemIsEnabled|Qt::ItemIsSelectable : Qt::ItemIsEnabled|Qt::ItemIsSelectable|Qt::ItemIsEditable;
 }

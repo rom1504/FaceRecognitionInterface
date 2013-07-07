@@ -13,6 +13,6 @@ QVariant QStringSignalListAdapter::data ( const QModelIndex & index, int role ) 
      if (index.row() >= mList->nombre())
          return QVariant();
 
-     if(role == Qt::DisplayRole) return mList->get(index.row());
+     if(role == Qt::DisplayRole || role == Qt::EditRole) return mList->get(index.row());
      else return QVariant();
 }

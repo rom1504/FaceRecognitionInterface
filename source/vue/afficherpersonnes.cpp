@@ -1,6 +1,8 @@
 #include "afficherpersonnes.h"
 #include "ui_afficherpersonnes.h"
-#include <iostream>
+
+#include <QTimer>
+#include <QDebug>
 
 AfficherPersonnes::AfficherPersonnes(QWidget *parent) :
     QWidget(parent),
@@ -18,5 +20,10 @@ AfficherPersonnes::~AfficherPersonnes()
 void AfficherPersonnes::setModel(QStringSignalListAdapter *qstringSignalListAdapter)
 {
     ui->listViewPersonne->setModel(qstringSignalListAdapter);
-    connect(ui->listViewPersonne->selectionModel(),&QItemSelectionModel::currentChanged,[this](const QModelIndex &,const QModelIndex &){emit afficherPersonne(ui->listViewPersonne->model()->data(ui->listViewPersonne->selectionModel()->currentIndex()).toString());});
+    connect(ui->listViewPersonne->selectionModel(),&QItemSelectionModel::currentChanged,[this](const QModelIndex &,const QModelIndex &){afficherPersonneCourante();});
+}
+
+void AfficherPersonnes::afficherPersonneCourante()
+{
+    emit afficherPersonne(ui->listViewPersonne->model()->data(ui->listViewPersonne->selectionModel()->currentIndex()).toString());
 }

@@ -20,6 +20,9 @@ public:
 
 signals:
     void afficherPersonne(QString personne);
+
+private slots:
+    void afficherPersonneCourante();
     
 private:
     Ui::AfficherPersonnes *ui;

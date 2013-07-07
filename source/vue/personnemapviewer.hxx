@@ -21,11 +21,14 @@ template <class T,class ViewerType,class ModelType> void PersonneMapViewer<T,Vie
 {
     mPersonneMap=personneMap;
     ui->afficherPersonnes->setModel(new QStringSignalListAdapter(mPersonneMap->getPersonnes()));
-    connect(ui->afficherPersonnes,&AfficherPersonnes::afficherPersonne,[this](QString personne)
-    {
-        mViewer->setModel(new ModelType(mPersonneMap->getList(personne)));
-    });
+    connect(ui->afficherPersonnes,&AfficherPersonnes::afficherPersonne,this,&PersonneMapViewer<T,ViewerType,ModelType>::afficherPersonne);
 }
+
+template <class T,class ViewerType,class ModelType> void PersonneMapViewer<T,ViewerType,ModelType>::afficherPersonne(QString personne)
+{
+    mViewer->setModel(new ModelType(mPersonneMap->getList(personne)));
+}
+
 
 template <class T,class ViewerType,class ModelType> PersonneMapViewer<T,ViewerType,ModelType>::~PersonneMapViewer()
 {

@@ -28,6 +28,8 @@ public:
     void setAdapterPhotoDe(PersonneMap<Photo*> * adapter);
     void setAdapterIdentificationDe(PersonneMap<Identification*> * adapter);
 
+    void run();
+
 signals:
     void verifierReconnaissance();
 

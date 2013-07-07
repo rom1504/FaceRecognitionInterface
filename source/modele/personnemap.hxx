@@ -26,7 +26,7 @@ template <class T> void PersonneMap<T>::ajout(QString personne,T element)
 
 template <class T> bool PersonneMap<T>::contient(QString personne,T element) const
 {
-    return mMap[personne]->contient(element);
+    return mMap.contains(personne) && mMap[personne]->contient(element);
 }
 
 template <class T> SignalList<T> *PersonneMap<T>::getList(QString personne)

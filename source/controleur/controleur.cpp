@@ -2,6 +2,7 @@
 
 #include "controleur.h"
 #include "adapteur/photosignallistadapter.h"
+#include "vue/identificationeditor.h"
 
 Controleur::Controleur(QObject *parent) :
     QObject(parent)
@@ -11,6 +12,7 @@ Controleur::Controleur(QObject *parent) :
     mPhotos->chargerPhotos("donnees/photos","donnees/informations");
     IdentificationSignalListAdapter::mCachePhotos=mCachePhotos;
     PhotoSignalListAdapter::mCachePhotos=mCachePhotos;
+    IdentificationEditor::mPersonnes=new QStringSignalListAdapter(&(mPhotos->personnes()));
 
 
     mMainWindow->setAdapterIdentificationNonReconnues(new IdentificationSignalListAdapter(&(mPhotos->identificationsNonReconnus())));
@@ -22,5 +24,5 @@ Controleur::Controleur(QObject *parent) :
 
 void Controleur::run()
 {
-    mMainWindow->show();
+    mMainWindow->run();
 }

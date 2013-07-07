@@ -17,6 +17,9 @@ public:
     explicit PersonneMapViewer(QWidget *parent = 0);
     void setModel(PersonneMap<T> * personneMap);
     ~PersonneMapViewer();
+
+private:
+    void afficherPersonne(QString personne);
     
 private:
     Ui::PersonneMapViewer *ui;

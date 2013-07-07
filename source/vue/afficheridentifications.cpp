@@ -1,5 +1,10 @@
+#include <QItemDelegate>
+#include <QItemEditorFactory>
+
 #include "afficheridentifications.h"
 #include "ui_afficheridentifications.h"
+#include "modele/identification.h"
+#include "vue/identificationeditor.h"
 
 AfficherIdentifications::AfficherIdentifications(QWidget *parent) :
     QWidget(parent),
@@ -7,6 +12,12 @@ AfficherIdentifications::AfficherIdentifications(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->listView->setViewMode(QListView::IconMode);
+
+    QItemEditorFactory * factory=new QItemEditorFactory();
+    factory->registerEditor((QVariant::Type)qMetaTypeId<Identification*>(), new QStandardItemEditorCreator<IdentificationEditor>());
+    QItemDelegate * delegate=new QItemDelegate();
+    delegate->setItemEditorFactory(factory);
+    ui->listView->setItemDelegate(delegate);
 }
 
 

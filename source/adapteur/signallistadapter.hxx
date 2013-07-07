@@ -13,6 +13,7 @@ template <class T> SignalListAdapter<T>::SignalListAdapter(SignalList<T> *list, 
 
 template <class T> int SignalListAdapter<T>::rowCount (const QModelIndex &) const
 {
+    if(mList==nullptr) return 0;
     return mList->nombre();
 }
 

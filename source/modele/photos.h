@@ -27,7 +27,7 @@ public:
      * @brief personnes fournit la liste des personnes dans les photos (utile pour la reconnaissance manuelle)
      * @return sous la forme d'une liste de string
      */
-    const QSet<QString> &personnes() const;
+    SignalList<QString> &personnes();
     /**
      * @brief chargerPhotos permet de charger toutes les photos d'un dossier
      * @param dossier le chemin du dossier
@@ -74,7 +74,7 @@ protected:
     /**
      * @brief mPersonnes contient l'ensemble des personnes (utilisé pour proposer des personnes pour la reconnaissance manuelle)
      */
-    QSet<QString> mPersonnes;
+    SignalList<QString> mPersonnes;
     
 };
 

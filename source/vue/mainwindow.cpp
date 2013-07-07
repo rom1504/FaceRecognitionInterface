@@ -1,9 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include <QStringListModel>
-#include <iostream>
 #include <QProcess>
 #include <QMessageBox>
+#include <QTimer>
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "vue/personnemapviewer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -57,10 +58,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
         QProcess *myProcess = new QProcess();
         myProcess->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
-      //  mProcessDialog = new QProgressDialog("Operation in progress.", "Cancel", 0, 100);
         connect(myProcess,SIGNAL(finished(int)),this,SLOT(finir(int)));
-      //  mProcessDialog->setValue(1);
     });
+}
+
+void MainWindow::run()
+{
+    QTimer::singleShot(200, ui->personneNonReconnuesViewer, SLOT(show()));
+    show();
 }
 
 
@@ -87,7 +92,7 @@ void MainWindow::setAdapterIdentificationDe(PersonneMap<Identification*> * adapt
 
 void MainWindow::finir(int)
 {
- //   mProcessDialog->setValue(50);
+    // maj les infos ici.
     QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");
 }
 
