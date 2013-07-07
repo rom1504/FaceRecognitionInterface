@@ -16,13 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="AfficherPersonnes" name="afficherPersonnes" native="true"/>
-    </item>
-    <item>
-     <widget class="ValiderPhotos" name="validerPhotos" native="true"/>
-    </item>
-    <item>
-     <widget class="AfficherPhotos" name="afficherPhotos" native="true"/>
+     <widget class="AfficherIdentifications" name="personneNonReconnuesViewer" native="true"/>
     </item>
    </layout>
   </widget>
@@ -39,10 +33,13 @@
     <property name="title">
      <string>Fichier</string>
     </property>
-    <addaction name="actionVerifier_reconnaissance"/>
-    <addaction name="actionAfficher_photos"/>
+    <addaction name="actionAfficher_les_identifications_non_reconnues"/>
+    <addaction name="actionAfficher_les_identifications_non_validees"/>
+    <addaction name="actionAfficher_les_identifications_validees"/>
+    <addaction name="actionAfficher_les_photos_validees"/>
+    <addaction name="separator"/>
     <addaction name="actionDetecter_les_visages"/>
-    <addaction name="actionReconnaitre_manuellement"/>
+    <addaction name="actionReconnaissance_automatique"/>
    </widget>
    <addaction name="menuFichier"/>
   </widget>
@@ -73,7 +70,7 @@
   </action>
   <action name="actionDetecter_les_visages">
    <property name="text">
-    <string>Détecter les visages</string>
+    <string>Détection automatique</string>
    </property>
   </action>
   <action name="actionReconnaitre_manuellement">
@@ -81,25 +78,38 @@
     <string>Reconnaitre manuellement</string>
    </property>
   </action>
+  <action name="actionAfficher_les_identifications_non_reconnues">
+   <property name="text">
+    <string>Afficher les identifications non reconnues</string>
+   </property>
+  </action>
+  <action name="actionAfficher_les_identifications_non_validees">
+   <property name="text">
+    <string>Afficher les identifications non validées</string>
+   </property>
+  </action>
+  <action name="actionAfficher_les_identifications_validees">
+   <property name="text">
+    <string>Afficher les identifications validées</string>
+   </property>
+  </action>
+  <action name="actionAfficher_les_photos_validees">
+   <property name="text">
+    <string>Afficher les photos validées</string>
+   </property>
+  </action>
+  <action name="actionReconnaissance_automatique">
+   <property name="text">
+    <string>Reconnaissance automatique</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>AfficherPersonnes</class>
+   <class>AfficherIdentifications</class>
    <extends>QWidget</extends>
-   <header>vue/afficherpersonnes.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ValiderPhotos</class>
-   <extends>QWidget</extends>
-   <header>vue/validerphotos.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AfficherPhotos</class>
-   <extends>QWidget</extends>
-   <header>vue/afficherphotos.h</header>
+   <header>vue/afficheridentifications.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -2,7 +2,8 @@
 #define AFFICHERPHOTOS_H
 
 #include <QWidget>
-#include "modele/modeleafficherphotos.h"
+
+#include "adapteur/photosignallistadapter.h"
 
 namespace Ui {
 class AfficherPhotos;
@@ -14,10 +15,8 @@ class AfficherPhotos : public QWidget
     
 public:
     explicit AfficherPhotos(QWidget *parent = 0);
+    void setModel(PhotoSignalListAdapter * adapter);
     ~AfficherPhotos();
-    void setModel(ModeleAfficherPhotos * modeleAfficherPhotos);
-
-signals:
     
 private:
     Ui::AfficherPhotos *ui;

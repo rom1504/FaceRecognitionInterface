@@ -7,8 +7,6 @@ AfficherPersonnes::AfficherPersonnes(QWidget *parent) :
     ui(new Ui::AfficherPersonnes)
 {
     ui->setupUi(this);
-
-    connect(ui->pushButtonChoisirPersonne,&QPushButton::clicked,[this](){emit afficherPersonne(ui->listViewPersonne->model()->data(ui->listViewPersonne->selectionModel()->currentIndex()).toString());});
 }
 
 AfficherPersonnes::~AfficherPersonnes()
@@ -17,8 +15,8 @@ AfficherPersonnes::~AfficherPersonnes()
 }
 
 
-void AfficherPersonnes::setModel(ModeleAfficherPersonne * modeleAfficherPersonne)
+void AfficherPersonnes::setModel(QStringSignalListAdapter *qstringSignalListAdapter)
 {
-    ui->listViewPersonne->setModel(modeleAfficherPersonne);
+    ui->listViewPersonne->setModel(qstringSignalListAdapter);
     connect(ui->listViewPersonne->selectionModel(),&QItemSelectionModel::currentChanged,[this](const QModelIndex &,const QModelIndex &){emit afficherPersonne(ui->listViewPersonne->model()->data(ui->listViewPersonne->selectionModel()->currentIndex()).toString());});
 }

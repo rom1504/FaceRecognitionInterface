@@ -1,11 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QStringListModel>
-#include "modele/modelevaliderphotos.h"
-#include "modele/modeleafficherpersonne.h"
 #include <iostream>
 #include <QProcess>
 #include <QMessageBox>
+#include "vue/personnemapviewer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,35 +13,46 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     showMaximized();
     ui->setupUi(this);
-    ui->horizontalLayout->setStretch(1,1);
-    ui->horizontalLayout->setStretch(2,1);
-    ui->validerPhotos->hide();
-    ui->afficherPhotos->hide();
+    mIdentificationsNonValideesViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
+    ui->horizontalLayout->addWidget(mIdentificationsNonValideesViewer);
+    mIdentificationsDeViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
+    ui->horizontalLayout->addWidget(mIdentificationsDeViewer);
+    mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter>();
+    ui->horizontalLayout->addWidget(mPhotosDeViewer);
 
-    connect(ui->actionAfficher_photos,&QAction::triggered,[this](){
-        ui->validerPhotos->hide();
-        emit afficherPhotos();
-    });
-    connect(ui->actionVerifier_reconnaissance,&QAction::triggered,[this](){
-        ui->afficherPhotos->hide();
-        emit verifierReconnaissance();
-    });
 
-    connect(ui->afficherPersonnes,&AfficherPersonnes::afficherPersonne,[this](QString personne){
-        if(mAfficherOuValider)
-        {
-            ui->afficherPhotos->show();
-            emit afficherPersonne(personne);
-        }
-        else
-        {
-            ui->validerPhotos->show();
-            emit validerPersonne(personne);
-        }
+    connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){
+        mIdentificationsDeViewer->hide();
+        mPhotosDeViewer->hide();
+        mIdentificationsNonValideesViewer->hide();
+        ui->personneNonReconnuesViewer->show();
     });
 
-    connect(ui->validerPhotos,&ValiderPhotos::valider,this,&MainWindow::validerPhotos);
+    connect(ui->actionAfficher_les_identifications_non_validees,&QAction::triggered,[this](){
+        mIdentificationsDeViewer->hide();
+        mPhotosDeViewer->hide();
+        ui->personneNonReconnuesViewer->hide();
+        mIdentificationsNonValideesViewer->show();
+    });
 
+    connect(ui->actionAfficher_les_identifications_validees,&QAction::triggered,[this](){
+        ui->personneNonReconnuesViewer->hide();
+        mIdentificationsNonValideesViewer->hide();
+        mPhotosDeViewer->hide();
+        mIdentificationsDeViewer->show();
+    });
+
+    connect(ui->actionAfficher_les_photos_validees,&QAction::triggered,[this](){
+        ui->personneNonReconnuesViewer->hide();
+        mIdentificationsNonValideesViewer->hide();
+        mIdentificationsDeViewer->hide();
+        mPhotosDeViewer->show();
+    });
+
+    ui->personneNonReconnuesViewer->hide();
+    mIdentificationsNonValideesViewer->hide();
+    mIdentificationsDeViewer->hide();
+    mPhotosDeViewer->hide();
 
     connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
         QProcess *myProcess = new QProcess();
@@ -53,28 +63,33 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 }
 
+
+void MainWindow::setAdapterIdentificationNonValidees(PersonneMap<Identification*> * adapter)
+{
+    mIdentificationsNonValideesViewer->setModel(adapter);
+}
+
+void MainWindow::setAdapterIdentificationNonReconnues(IdentificationSignalListAdapter * adapter)
+{
+    ui->personneNonReconnuesViewer->setModel(adapter);
+}
+
+
+void MainWindow::setAdapterPhotoDe(PersonneMap<Photo*> * adapter)
+{
+    mPhotosDeViewer->setModel(adapter);
+}
+
+void MainWindow::setAdapterIdentificationDe(PersonneMap<Identification*> * adapter)
+{
+    mIdentificationsDeViewer->setModel(adapter);
+}
+
 void MainWindow::finir(int)
 {
  //   mProcessDialog->setValue(50);
     QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");
 }
-
-void MainWindow::setModelAfficherPersonne(ModeleAfficherPersonne * modeleAfficherPersonne,bool afficherOuValider)
-{
-    mAfficherOuValider=afficherOuValider;
-    ui->afficherPersonnes->setModel(modeleAfficherPersonne);
-}
-
-void MainWindow::setModelValiderPhotos(ModeleValiderPhotos * modeleValiderPhotos)
-{
-    ui->validerPhotos->setModel(modeleValiderPhotos);
-}
-
-void MainWindow::setModelAfficherPhotos(ModeleAfficherPhotos *modeleAfficherPhotos)
-{
-    ui->afficherPhotos->setModel(modeleAfficherPhotos);
-}
-
 
 MainWindow::~MainWindow()
 {

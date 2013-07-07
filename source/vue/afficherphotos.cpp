@@ -6,15 +6,15 @@ AfficherPhotos::AfficherPhotos(QWidget *parent) :
     ui(new Ui::AfficherPhotos)
 {
     ui->setupUi(this);
+}
 
+
+void AfficherPhotos::setModel(PhotoSignalListAdapter * adapter)
+{
+    ui->listView->setModel(adapter);
 }
 
 AfficherPhotos::~AfficherPhotos()
 {
     delete ui;
-}
-
-void AfficherPhotos::setModel(ModeleAfficherPhotos * modeleAfficherPhotos)
-{
-    ui->listViewPhoto->setModel(modeleAfficherPhotos);
 }

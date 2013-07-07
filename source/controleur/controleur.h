@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include "vue/mainwindow.h"
-#include "modele/photosAValider.h"
 #include "modele/photos.h"
+#include "modele/cachephotos.h"
 
 class Controleur : public QObject
 {
@@ -20,9 +20,9 @@ public slots:
     
 private:
     MainWindow * mMainWindow;
-    PhotosAValider * mPhotosAValider;
-    Photos * mPhotosAffichees;
+    Photos * mPhotos;
     QString mPersonne;
+    CachePhotos mCachePhotos;
 
 };
 

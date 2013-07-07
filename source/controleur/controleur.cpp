@@ -1,39 +1,23 @@
+#include <QDebug>
+
 #include "controleur.h"
+#include "adapteur/photosignallistadapter.h"
 
 Controleur::Controleur(QObject *parent) :
     QObject(parent)
 {
     mMainWindow=new MainWindow();
-    mPhotosAffichees=new Photos();
-    mPhotosAffichees->chargerPhotos("donnees/valide");
-    mMainWindow->setModelAfficherPersonne(new ModeleAfficherPersonne(mPhotosAffichees),true);
-
-    connect(mMainWindow,&MainWindow::validerPersonne,[this](QString personne){
-        mPersonne=personne;
-        mMainWindow->setModelValiderPhotos(new ModeleValiderPhotos(mPhotosAValider->premieresPhotosDe(mPersonne)));
-    });
-
-    connect(mMainWindow,&MainWindow::afficherPersonne,[this](QString personne){
-        mPersonne=personne;
-        mMainWindow->setModelAfficherPhotos(new ModeleAfficherPhotos(mPhotosAffichees->photosDe(mPersonne)));
-    });
-
-    connect(mMainWindow,&MainWindow::validerPhotos,[this](QList<bool> valides){
-        if(!mPhotosAValider->valider(mPersonne,valides)) mMainWindow->setModelValiderPhotos(new ModeleValiderPhotos(mPhotosAValider->premieresPhotosDe(mPersonne)));
-    });
-
-    connect(mMainWindow,&MainWindow::afficherPhotos,[this](){
-        mPhotosAffichees=new Photos();
-        mPhotosAffichees->chargerPhotos("donnees/valide");
-        mMainWindow->setModelAfficherPersonne(new ModeleAfficherPersonne(mPhotosAffichees),true);
-    });
+    mPhotos=new Photos();
+    mPhotos->chargerPhotos("donnees/photos","donnees/informations");
+    IdentificationSignalListAdapter::mCachePhotos=mCachePhotos;
+    PhotoSignalListAdapter::mCachePhotos=mCachePhotos;
 
 
-    connect(mMainWindow,&MainWindow::verifierReconnaissance,[this](){
-        mPhotosAValider=new PhotosAValider();
-        mPhotosAValider->chargerPhotos();
-        mMainWindow->setModelAfficherPersonne(new ModeleAfficherPersonne(mPhotosAValider),false);
-    });
+    mMainWindow->setAdapterIdentificationNonReconnues(new IdentificationSignalListAdapter(&(mPhotos->identificationsNonReconnus())));
+    mMainWindow->setAdapterIdentificationNonValidees(&(mPhotos->identificationsNonValidees()));
+    mMainWindow->setAdapterIdentificationDe(&(mPhotos->identificationsDe()));
+    mMainWindow->setAdapterPhotoDe(&(mPhotos->photosDe()));
+
 }
 
 void Controleur::run()

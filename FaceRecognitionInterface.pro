@@ -21,32 +21,45 @@ INCLUDEPATH = source/
 SOURCES += main.cpp \
     vue/mainwindow.cpp \
     controleur/controleur.cpp \
-    modele/photo.cpp \
-    modele/modeleafficherpersonne.cpp \
     vue/afficherpersonnes.cpp \
-    modele/modelevaliderphotos.cpp \
-    vue/validerphotos.cpp \
-    vue/afficherphotos.cpp \
-    modele/modeleafficherphotos.cpp \
-    modele/photosAValider.cpp \
-    modele/photos.cpp
+    source/modele/photos.cpp \
+    source/modele/identification.cpp \
+    source/modele/cachephotos.cpp \
+    source/modele/photo.cpp \
+    source/modele/personnemap.cpp \
+    source/modele/signallist.cpp \
+    source/adapteur/qstringsignallistadapter.cpp \
+    source/adapteur/identificationsignallistadapter.cpp \
+    source/adapteur/photosignallistadapter.cpp \
+    source/vue/afficheridentifications.cpp \
+    source/vue/afficherphotos.cpp
 
 HEADERS  += vue/mainwindow.h \
     controleur/controleur.h \
-    modele/photo.h \
-    modele/modeleafficherpersonne.h \
     vue/afficherpersonnes.h \
-    modele/modelevaliderphotos.h \
-    vue/validerphotos.h \
-    vue/afficherphotos.h \
-    modele/modeleafficherphotos.h \
-    modele/photosAValider.h \
-    modele/photos.h
+    source/modele/photos.h \
+    source/modele/identification.h \
+    source/modele/cachephotos.h \
+    source/modele/photo.h \
+    source/modele/personnemap.h \
+    source/modele/signallist.h \
+    source/modele/personnemap.hxx \
+    source/modele/signallist.hxx \
+    source/adapteur/signallistadapter.h \
+    source/adapteur/signallistadapter.hxx \
+    source/adapteur/qstringsignallistadapter.h \
+    source/adapteur/identificationsignallistadapter.h \
+    source/adapteur/photosignallistadapter.h \
+    source/vue/afficheridentifications.h \
+    source/vue/afficherphotos.h \
+    source/vue/personnemapviewer.h \
+    source/vue/personnemapviewer.hxx
 
 FORMS    += vue/mainwindow.ui \
     vue/afficherpersonnes.ui \
-    vue/validerphotos.ui \
-    vue/afficherphotos.ui
+    source/vue/afficheridentifications.ui \
+    source/vue/afficherphotos.ui \
+    source/vue/personnemapviewer.ui
 
 OTHER_FILES += \
     description.txt \

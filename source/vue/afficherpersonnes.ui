@@ -17,13 +17,6 @@
    <item>
     <widget class="QListView" name="listViewPersonne"/>
    </item>
-   <item>
-    <widget class="QPushButton" name="pushButtonChoisirPersonne">
-     <property name="text">
-      <string>Choisir personne</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources/>

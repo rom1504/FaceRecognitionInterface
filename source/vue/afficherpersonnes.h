@@ -2,7 +2,7 @@
 #define AFFICHERPERSONNES_H
 
 #include <QWidget>
-#include "modele/modeleafficherpersonne.h"
+#include "adapteur/qstringsignallistadapter.h"
 
 namespace Ui {
 class AfficherPersonnes;
@@ -16,8 +16,7 @@ public:
     explicit AfficherPersonnes(QWidget *parent = 0);
     ~AfficherPersonnes();
 
-    void setModel(ModeleAfficherPersonne * modeleAfficherPersonne);
-    void prochainePersonne();
+    void setModel(QStringSignalListAdapter *qstringSignalListAdapter);
 
 signals:
     void afficherPersonne(QString personne);

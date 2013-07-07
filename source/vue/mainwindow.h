@@ -4,9 +4,12 @@
 #include <QMainWindow>
 #include <QProgressDialog>
 #include "modele/photos.h"
-#include "modele/modelevaliderphotos.h"
-#include "modele/modeleafficherpersonne.h"
-#include "modele/modeleafficherphotos.h"
+#include "adapteur/qstringsignallistadapter.h"
+#include "adapteur/identificationsignallistadapter.h"
+#include "adapteur/photosignallistadapter.h"
+#include "vue/afficheridentifications.h"
+#include "vue/afficherphotos.h"
+#include "vue/personnemapviewer.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,16 +23,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setModelAfficherPersonne(ModeleAfficherPersonne * modeleAfficherPersonne, bool afficherOuValider=true);
-    void setModelValiderPhotos(ModeleValiderPhotos * modeleValiderPhotos);
-    void setModelAfficherPhotos(ModeleAfficherPhotos * modeleAfficherPhotos);
+    void setAdapterIdentificationNonReconnues(IdentificationSignalListAdapter * adapter);
+    void setAdapterIdentificationNonValidees(PersonneMap<Identification*> * adapter);
+    void setAdapterPhotoDe(PersonneMap<Photo*> * adapter);
+    void setAdapterIdentificationDe(PersonneMap<Identification*> * adapter);
 
 signals:
-    void afficherPersonne(QString personne);
-    void validerPersonne(QString personne);
-    void validerPhotos(QList<bool> valides);
     void verifierReconnaissance();
-    void afficherPhotos();
 
 public slots:
     void finir(int);
@@ -38,6 +38,9 @@ public slots:
 private:
     Ui::MainWindow *ui;
     bool mAfficherOuValider;
+    PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsNonValideesViewer;
+    PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsDeViewer;
+    PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter> * mPhotosDeViewer;
     //QProgressDialog * mProcessDialog;
 };
 

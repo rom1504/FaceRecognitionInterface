@@ -1,37 +1,81 @@
 #include "photos.h"
 #include "photo.h"
 #include <QDir>
+#include <QDebug>
+
 
 Photos::Photos(QObject *parent) :
     QObject(parent)
 {
 }
 
-void Photos::ajouterPhoto(QString nomFichier,QString personne,QString dossier)
+void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
 {
-    mPhotos[personne]<<new Photo(nomFichier,personne,dossier);
-}
-
-void Photos::chargerPhotos(QString dossier,std::function<bool(QString)> filtre)
-{
-    QDir dir(dossier);
-    for(QString personne : dir.entryList(QDir::Dirs))
+    Photo * photo=new Photo(nomFichier,nomFichierInformation);
+    const QList<Identification *> & identifications = photo->identifications();
+    for(Identification * identification : identifications)
     {
-        if(personne!="." && personne!="..")
+        if(!identification->identifie()) mIdentificationsNonReconnus.ajout(identification);
+        else
         {
-            QDir dirPersonne(dossier+"/"+personne);
-            for(QString nomFichier : dirPersonne.entryList(QDir::Files)) if(filtre(personne+"/"+nomFichier)) ajouterPhoto(nomFichier,personne,dossier);
-            if(mPhotos.contains(personne)) mPersonnes<<personne;
+            QString personne=identification->personne();
+            mPersonnes<<personne;
+            if(!identification->valide()) mIdentificationsNonValidees.ajout(personne,identification);
+            else
+            {
+                mIdentificationsDe.ajout(personne,identification);
+                mPhotosDe.ajout(personne,photo);
+            }
         }
+        connect(identification,&Identification::sidentifie,[this](){
+            Identification * identification=dynamic_cast<Identification*>(sender());
+            mIdentificationsNonReconnus.suppression(identification);// marche ?? devrait marcher oui
+            mIdentificationsNonValidees.ajout(identification->personne(),identification);
+        });
+        connect(identification,&Identification::svalide,[this](){
+            Identification * identification=dynamic_cast<Identification*>(sender());
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);// marche ?? devrait marcher oui
+            mIdentificationsDe.ajout(identification->personne(),identification);
+            if(!mPhotosDe.contient(identification->personne(),identification->photoAssocie())) mPhotosDe.ajout(identification->personne(),identification->photoAssocie());
+        });
+
+        connect(identification,&Identification::sinvalide,[this](){
+            Identification * identification=dynamic_cast<Identification*>(sender());
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);// marche ?? devrait marcher oui
+            mIdentificationsNonReconnus.ajout(identification);
+        });
     }
 }
 
-const QList<QString> & Photos::personnes() const
+
+SignalList<Identification *> &Photos::identificationsNonReconnus()
+{
+    return mIdentificationsNonReconnus;
+}
+
+PersonneMap<Identification*> & Photos::identificationsDe()
+{
+    return mIdentificationsDe;
+}
+
+
+PersonneMap<Photo *> & Photos::photosDe()
+{
+    return mPhotosDe;
+}
+
+void Photos::chargerPhotos(QString dossier, QString dossierInformation)
+{
+    QDir dir(dossier);
+    for(QFileInfo infoFichier : dir.entryInfoList(QDir::Files)) ajouterPhoto(infoFichier.filePath(),dossierInformation+"/"+infoFichier.fileName()+".txt");
+}
+
+const QSet<QString> & Photos::personnes() const
 {
     return mPersonnes;
 }
 
-const QList<Photo*> Photos::photosDe(QString personne) const
+PersonneMap<Identification*> & Photos::identificationsNonValidees()
 {
-    return mPhotos[personne];
+    return mIdentificationsNonValidees;
 }
