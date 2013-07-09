@@ -26,7 +26,6 @@ SOURCES += main.cpp \
     source/modele/identification.cpp \
     source/modele/cachephotos.cpp \
     source/modele/photo.cpp \
-    source/modele/personnemap.cpp \
     source/modele/signallist.cpp \
     source/adapteur/qstringsignallistadapter.cpp \
     source/adapteur/identificationsignallistadapter.cpp \

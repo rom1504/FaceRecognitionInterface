@@ -15,56 +15,32 @@ MainWindow::MainWindow(QWidget *parent) :
     showMaximized();
     ui->setupUi(this);
     mIdentificationsNonValideesViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
-    ui->horizontalLayout->addWidget(mIdentificationsNonValideesViewer);
+    ui->stackedWidget->addWidget(mIdentificationsNonValideesViewer);
     mIdentificationsDeViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
-    ui->horizontalLayout->addWidget(mIdentificationsDeViewer);
+    ui->stackedWidget->addWidget(mIdentificationsDeViewer);
     mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter>();
-    ui->horizontalLayout->addWidget(mPhotosDeViewer);
+    ui->stackedWidget->addWidget(mPhotosDeViewer);
 
 
-    connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){
-        mIdentificationsDeViewer->hide();
-        mPhotosDeViewer->hide();
-        mIdentificationsNonValideesViewer->hide();
-        ui->personneNonReconnuesViewer->show();
-    });
-
-    connect(ui->actionAfficher_les_identifications_non_validees,&QAction::triggered,[this](){
-        mIdentificationsDeViewer->hide();
-        mPhotosDeViewer->hide();
-        ui->personneNonReconnuesViewer->hide();
-        mIdentificationsNonValideesViewer->show();
-    });
-
-    connect(ui->actionAfficher_les_identifications_validees,&QAction::triggered,[this](){
-        ui->personneNonReconnuesViewer->hide();
-        mIdentificationsNonValideesViewer->hide();
-        mPhotosDeViewer->hide();
-        mIdentificationsDeViewer->show();
-    });
-
-    connect(ui->actionAfficher_les_photos_validees,&QAction::triggered,[this](){
-        ui->personneNonReconnuesViewer->hide();
-        mIdentificationsNonValideesViewer->hide();
-        mIdentificationsDeViewer->hide();
-        mPhotosDeViewer->show();
-    });
-
-    ui->personneNonReconnuesViewer->hide();
-    mIdentificationsNonValideesViewer->hide();
-    mIdentificationsDeViewer->hide();
-    mPhotosDeViewer->hide();
-
+    connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(0);});
+    connect(ui->actionAfficher_les_identifications_non_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(1);});
+    connect(ui->actionAfficher_les_identifications_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(2);});
+    connect(ui->actionAfficher_les_photos_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(3);});
+    ui->stackedWidget->hide();
     connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
+        mProcessDialog=new QProgressDialog("Détection en cours...",QString(), 0, 4, this);
+        mProcessDialog->setWindowModality(Qt::WindowModal);
+        mProcessDialog->setValue(1);
         QProcess *myProcess = new QProcess();
         myProcess->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
+        mProcessDialog->setValue(2);
         connect(myProcess,SIGNAL(finished(int)),this,SLOT(finir(int)));
     });
 }
 
 void MainWindow::run()
 {
-    QTimer::singleShot(200, ui->personneNonReconnuesViewer, SLOT(show()));
+    QTimer::singleShot(200, ui->stackedWidget, SLOT(show()));
     show();
 }
 
@@ -93,6 +69,11 @@ void MainWindow::setAdapterIdentificationDe(PersonneMap<Identification*> * adapt
 void MainWindow::finir(int)
 {
     // maj les infos ici.
+    // 1) clear
+    // 2) charger
+    mProcessDialog->setValue(3);
+    emit reloadPhotos();
+    mProcessDialog->setValue(4);
     QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");
 }
 

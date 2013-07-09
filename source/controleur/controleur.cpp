@@ -20,6 +20,11 @@ Controleur::Controleur(QObject *parent) :
     mMainWindow->setAdapterIdentificationDe(&(mPhotos->identificationsDe()));
     mMainWindow->setAdapterPhotoDe(&(mPhotos->photosDe()));
 
+    connect(mMainWindow,&MainWindow::reloadPhotos,[this](){
+        mPhotos->clear();
+        mPhotos->chargerPhotos("donnees/photos","donnees/informations");
+    });
+
 }
 
 void Controleur::run()

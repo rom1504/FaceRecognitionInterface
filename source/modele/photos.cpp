@@ -28,20 +28,30 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
             }
         }
         connect(identification,&Identification::sidentifie,[this,identification](){
-            mIdentificationsNonReconnus.suppression(identification);// marche ?? devrait marcher oui
+            mIdentificationsNonReconnus.suppression(identification);
             mIdentificationsNonValidees.ajout(identification->personne(),identification);
         });
         connect(identification,&Identification::svalide,[this,identification](){
-            mIdentificationsNonValidees.suppression(identification->personne(),identification);// marche ?? devrait marcher oui
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);
             mIdentificationsDe.ajout(identification->personne(),identification);
             if(!mPhotosDe.contient(identification->personne(),identification->photoAssocie())) mPhotosDe.ajout(identification->personne(),identification->photoAssocie());
         });
 
         connect(identification,&Identification::sinvalide,[this,identification](){
-            mIdentificationsNonValidees.suppression(identification->personne(),identification);// marche ?? devrait marcher oui
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);
             mIdentificationsNonReconnus.ajout(identification);
         });
     }
+}
+
+
+void Photos::clear()
+{
+    mIdentificationsNonReconnus.clear();
+    mIdentificationsNonValidees.clear();
+    mIdentificationsDe.clear();
+    mPhotosDe.clear();
+    mPersonnes.clear();
 }
 
 

@@ -35,6 +35,8 @@ public:
      */
     void chargerPhotos(QString dossier,QString dossierInformation);
 
+    void clear();
+
     PersonneMap<Identification *> & identificationsDe();
     PersonneMap<Photo *> & photosDe();
     SignalList<Identification*> & identificationsNonReconnus();

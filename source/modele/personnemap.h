@@ -7,26 +7,7 @@
 #include <QObject>
 #include "signallist.h"
 
-class PersonneMapBase : public QObject
-{
-    Q_OBJECT
-public:
-    PersonneMapBase(QObject * parent=0);
-
-signals:
-    void debutAjoutPersonne(int position);
-    void finAjoutPersonne(int position);
-    void debutSupressionPersonne(int position);
-    void finSupressionPersonne(int position);
-
-
-    void debutAjoutElement(QString personne,int position);
-    void finAjoutElement(QString personne,int position);
-    void debutSuppressionElement(QString personne,int position);
-    void finSuppressionElement(QString personne,int position);
-};
-
-template <class T> class PersonneMap : public PersonneMapBase
+template <class T> class PersonneMap : public QObject
 {
 public:
     PersonneMap(QObject * parent=0);
@@ -39,6 +20,7 @@ public:
     SignalList<T> * getList(QString personne);
     SignalList<QString> * getPersonnes();
     bool contient(QString personne,T element) const;
+    void clear();
 
 private:
     SignalList<QString> * mPersonnes;

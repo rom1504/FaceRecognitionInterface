@@ -32,6 +32,7 @@ public:
 
 signals:
     void verifierReconnaissance();
+    void reloadPhotos();
 
 public slots:
     void finir(int);
@@ -43,7 +44,7 @@ private:
     PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsNonValideesViewer;
     PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsDeViewer;
     PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter> * mPhotosDeViewer;
-    //QProgressDialog * mProcessDialog;
+    QProgressDialog * mProcessDialog;
 };
 
 #endif // MAINWINDOW_H

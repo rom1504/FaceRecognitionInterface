@@ -15,6 +15,8 @@ signals:
     void finAjout(int position);
     void debutSupression(int position);
     void finSupression(int position);
+    void beginReset();
+    void endReset();
 };
 
 template <class T> class SignalList : public SignalListBase
@@ -28,6 +30,7 @@ public:
     T get(int numero);
     T get(int numero) const;
     bool contient(T element) const;
+    void clear();
 
 
 private:

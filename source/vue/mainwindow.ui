@@ -16,7 +16,9 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="AfficherIdentifications" name="personneNonReconnuesViewer" native="true"/>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="AfficherIdentifications" name="personneNonReconnuesViewer"/>
+     </widget>
     </item>
    </layout>
   </widget>

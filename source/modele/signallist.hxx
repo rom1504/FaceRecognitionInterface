@@ -31,6 +31,14 @@ template <class T> void SignalList<T>::suppression(T element)
 }
 
 
+template <class T> void SignalList<T>::clear()
+{
+    emit beginReset();
+    mList.clear();
+    emit endReset();
+}
+
+
 template <class T> bool SignalList<T>::contient(T element) const
 {
     return mList.contains(element);

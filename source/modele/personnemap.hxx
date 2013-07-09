@@ -3,7 +3,7 @@
 
 #include "personnemap.h"
 
-template <class T> PersonneMap<T>::PersonneMap(QObject * parent) : PersonneMapBase(parent),mPersonnes(new SignalList<QString>([](QString a,QString b){return a>=b;},true))
+template <class T> PersonneMap<T>::PersonneMap(QObject * parent) : QObject(parent),mPersonnes(new SignalList<QString>([](QString a,QString b){return a>=b;},true))
 {
 
 }
@@ -14,14 +14,17 @@ template <class T> void PersonneMap<T>::ajout(QString personne,T element)
     {
         mPersonnes->ajout(personne);
         mMap.insert(personne,new SignalList<T>());
-        connect(mMap[personne],&SignalListBase::debutAjout,[this,personne](int numero){emit debutAjoutElement(personne,numero);}); // peut etre faire plus de chose que ça : permettre qu'editer directement la signallist modifie la PersonneMap<T> : voir si utile plus tard, si c'est utile alors voir si bcp de modif à faire, mais peut etre que ce ne sera pas utile
-        connect(mMap[personne],&SignalListBase::finAjout,[this,personne](int numero){emit finAjoutElement(personne,numero);});
-        connect(mMap[personne],&SignalListBase::debutSupression,[this,personne](int numero){emit debutSuppressionElement(personne,numero);});
-        connect(mMap[personne],&SignalListBase::finSupression,[this,personne](int numero){emit finSuppressionElement(personne,numero);});
     }
     mMap[personne]->ajout(element);
 }
 
+
+template <class T> void PersonneMap<T>::clear()
+{
+    for(SignalList<T>* list : mMap.values()) list->clear();
+    mPersonnes->clear();
+    mMap.clear();
+}
 
 
 template <class T> bool PersonneMap<T>::contient(QString personne,T element) const
