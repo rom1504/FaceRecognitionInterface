@@ -3,7 +3,7 @@
 
 #include <QString>
 
-#include "signallistadapter.h"
+#include "adapter/signallistadapter.h"
 
 
 class QStringSignalListAdapter : public SignalListAdapter<QString>

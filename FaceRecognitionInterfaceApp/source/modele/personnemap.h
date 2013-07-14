@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QList>
 #include <QObject>
-#include "signallist.h"
+#include "model/signallist.h"
 
 template <class T> class PersonneMap : public QObject
 {

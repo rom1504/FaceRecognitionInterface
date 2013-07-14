@@ -1,7 +1,7 @@
 #ifndef PHOTOSIGNALLISTADAPTER_H
 #define PHOTOSIGNALLISTADAPTER_H
 
-#include "signallistadapter.h"
+#include "adapter/signallistadapter.h"
 #include "modele/photo.h"
 #include "modele/cachephotos.h"
 

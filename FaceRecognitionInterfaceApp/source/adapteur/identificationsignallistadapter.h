@@ -4,7 +4,7 @@
 #include "modele/identification.h"
 #include "modele/cachephotos.h"
 
-#include "signallistadapter.h"
+#include "adapter/signallistadapter.h"
 
 
 class IdentificationSignalListAdapter : public SignalListAdapter<Identification*>
