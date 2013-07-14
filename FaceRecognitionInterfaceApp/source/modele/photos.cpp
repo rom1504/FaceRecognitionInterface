@@ -5,7 +5,7 @@
 
 
 Photos::Photos(QObject *parent) :
-    QObject(parent),mPersonnes([](QString a,QString b){return a>b;},true)
+    QObject(parent),mPersonnes([](QString a,QString b){return a<b;},true)
 {
 }
 
@@ -30,6 +30,7 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
         connect(identification,&Identification::sidentifie,[this,identification](){
             mIdentificationsNonReconnus.suppression(identification);
             mIdentificationsNonValidees.ajout(identification->personne(),identification);
+            if(!mPersonnes.contient(identification->personne())) mPersonnes.ajout(identification->personne());
         });
         connect(identification,&Identification::svalide,[this,identification](){
             mIdentificationsNonValidees.suppression(identification->personne(),identification);

@@ -3,7 +3,7 @@
 
 #include "personnemap.h"
 
-template <class T> PersonneMap<T>::PersonneMap(QObject * parent) : QObject(parent),mPersonnes(new SignalList<QString>([](QString a,QString b){return a>=b;},true))
+template <class T> PersonneMap<T>::PersonneMap(QObject * parent) : QObject(parent),mPersonnes(new SignalList<QString>([](QString a,QString b){return a<b;},true))
 {
 
 }
