@@ -11,8 +11,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    mAfficherOuValider(true)
+    ui(new Ui::MainWindow)
 {
     showMaximized();
     ui->setupUi(this);
@@ -29,33 +28,62 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAfficher_les_identifications_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(2);});
     connect(ui->actionAfficher_les_photos_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(3);});
     ui->stackedWidget->hide();
-    connect(ui->actionDetecter_les_visages,&QAction::triggered,[this]{
-        QDir dir("donnees/photos");
-        int photoFilesNumber=dir.entryList().count()-2;
-        dir.cd("../informations");
-        int informationsFilesNumber=dir.entryList().count()-2;
-        int remaining=photoFilesNumber-informationsFilesNumber;
-        Q_ASSERT(remaining>=0);
-        mProcessDialog=new QProgressDialog("Détection en cours...",QString(), 0, int(double(remaining)*1.5), this);
-        mProcessDialog->setWindowModality(Qt::WindowModal);
-        mProcessDialog->setMinimumDuration(0);
-        mProcessDialog->setValue(1);
-        mProcessDialog->setValue(2);
-        QProcess *myProcess = new QProcess();
-        double *avancement=new double(mProcessDialog->value());
-        int *num=new int(0);
-        connect(myProcess,&QProcess::readyReadStandardOutput,[num,remaining,avancement,myProcess,this](){
-            // voir pour faire péter la compilation de la chaine : ce serait plutôt une étape d'installation
-            if(mProcessDialog->value()>=mProcessDialog->maximum()-1) mProcessDialog->setMaximum(int(double(mProcessDialog->maximum())*1.2));
-            (*num)++;
-            (*avancement)+=(*num)>remaining ? 0.2 : 1.0;
-            mProcessDialog->setValue(int(*avancement));
-            // améliorable en lisant le début du découpage et en divisant le progrés par 2 ou qq chose comme ça
-            myProcess->readAllStandardOutput();
-            // faire une estimation initiale via fileNumber*2 puis une fois qu'on a récupéré les infos ajuster via setMaximum : non inutile, je crois que ce qui prends du temps c'est la première partie, on peut considérer qu'il reste fileNumber/10 étape ensuite, qu'on peut remplir d'un coup
-        });
-        myProcess->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
-        connect(myProcess,SIGNAL(finished(int)),this,SLOT(finir(int)));
+    connect(ui->actionDetecter_les_visages,&QAction::triggered,this,&MainWindow::detect);
+    connect(ui->actionReconnaissance_automatique,&QAction::triggered,this,&MainWindow::recognize);
+}
+
+void MainWindow::detect()
+{
+    QDir dir("donnees/photos");
+    int photoFilesNumber=dir.entryList().count()-2;
+    dir.cd("../informations");
+    int informationsFilesNumber=dir.entryList().count()-2;
+    int remaining=photoFilesNumber-informationsFilesNumber;
+    Q_ASSERT(remaining>=0);
+    QProgressDialog * processDialog=new QProgressDialog("Détection en cours...",QString(), 0, int(double(remaining)*1.5), this);
+    processDialog->setWindowModality(Qt::WindowModal);
+    processDialog->setMinimumDuration(0);
+    processDialog->setValue(1);
+    processDialog->setValue(2);
+    QProcess *process = new QProcess();
+    double *avancement=new double(processDialog->value());
+    int *num=new int(0);
+    connect(process,&QProcess::readyReadStandardOutput,[processDialog,num,remaining,avancement,process,this](){
+        // voir pour faire péter la compilation de la chaine : ce serait plutôt une étape d'installation
+        if(processDialog->value()>=processDialog->maximum()-1) processDialog->setMaximum(int(double(processDialog->maximum())*1.2));
+        (*num)++;
+        (*avancement)+=(*num)>remaining ? 0.2 : 1.0;
+        processDialog->setValue(int(*avancement));
+        // améliorable en lisant le début du découpage et en divisant le progrés par 2 ou qq chose comme ça
+        process->readAllStandardOutput();
+        // faire une estimation initiale via fileNumber*2 puis une fois qu'on a récupéré les infos ajuster via setMaximum : non inutile, je crois que ce qui prends du temps c'est la première partie, on peut considérer qu'il reste fileNumber/10 étape ensuite, qu'on peut remplir d'un coup
+    });
+    process->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
+    void (QProcess:: *f)(int) = &QProcess::finished;
+    connect(process,f,[this,processDialog](int){
+        emit reloadPhotos();
+        processDialog->setValue(processDialog->maximum());
+        QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");// indiquer des infos (nombre de photo dont on va vraiment fait la détection, sur combien, combien de temps pris,...)
+    });
+}
+
+void MainWindow::recognize()
+{
+    QProgressDialog * processDialog=new QProgressDialog("Reconnaissance en cours...",QString(), 0, 6, this);
+    processDialog->setWindowModality(Qt::WindowModal);
+    processDialog->setMinimumDuration(0);
+    processDialog->setValue(1);
+    QProcess *process = new QProcess();
+    connect(process,&QProcess::readyReadStandardOutput,[processDialog,process](){
+        processDialog->setValue(processDialog->value()+1);
+        process->readAllStandardOutput();
+    });
+    process->start("bash facerecognition/source/chaineSimplifie.sh donnees/informations donnees/photosDecoupees donnees/modele donnees/intermediaire");
+    void (QProcess:: *f)(int) = &QProcess::finished;
+    connect(process,f,[this,processDialog](int){
+        emit reloadPhotos();
+        processDialog->setValue(processDialog->maximum());
+        QMessageBox::information(this,"Reconnaissance terminé","La reconnaissance de visage est terminée");
     });
 }
 
@@ -85,13 +113,6 @@ void MainWindow::setAdapterPhotoDe(PersonneMap<Photo*> * adapter)
 void MainWindow::setAdapterIdentificationDe(PersonneMap<Identification*> * adapter)
 {
     mIdentificationsDeViewer->setModel(adapter);
-}
-
-void MainWindow::finir(int)
-{
-    emit reloadPhotos();
-    mProcessDialog->setValue(mProcessDialog->maximum());
-    QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");// indiquer des infos (nombre de photo dont on va vraiment fait la détection, sur combien, combien de temps pris,...)
 }
 
 MainWindow::~MainWindow()

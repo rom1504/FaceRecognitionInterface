@@ -78,8 +78,8 @@ void Identification::identifier(QString personne)
 void Identification::invalider()
 {
     mValide=false;
-    mPersonne="";
     emit sinvalide();
+    mPersonne="";
 }
 
 void Identification::valider()

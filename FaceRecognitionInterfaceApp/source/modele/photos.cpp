@@ -39,7 +39,7 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
         });
 
         connect(identification,&Identification::sinvalide,[this,identification](){
-            mIdentificationsNonValidees.suppression(identification->personne(),identification);
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);// pb ici !
             mIdentificationsNonReconnus.ajout(identification);
         });
     }

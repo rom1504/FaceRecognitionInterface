@@ -4,3 +4,6 @@
 [submodule "SignalList"]
 	path = SignalList
 	url = git@gitlab.rom1504.fr:rom1504/signallist.git
+[submodule "facerecognition"]
+	path = facerecognition
+	url = git@gitlab.rom1504.fr:rom1504/facerecognition.git

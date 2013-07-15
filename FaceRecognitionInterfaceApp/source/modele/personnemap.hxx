@@ -44,6 +44,7 @@ template <class T> SignalList<QString> *PersonneMap<T>::getPersonnes()
 
 template <class T> void PersonneMap<T>::suppression(QString personne,T element)
 {
+    Q_ASSERT(mMap.contains(personne));
     mMap[personne]->suppression(element);
     if(mMap[personne]->nombre()==0)
     {

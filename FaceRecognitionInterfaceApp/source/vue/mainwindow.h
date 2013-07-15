@@ -34,17 +34,15 @@ signals:
     void verifierReconnaissance();
     void reloadPhotos();
 
-public slots:
-    void finir(int);
-
+private:
+    void detect();
+    void recognize();
     
 private:
     Ui::MainWindow *ui;
-    bool mAfficherOuValider;
     PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsNonValideesViewer;
     PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsDeViewer;
     PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter> * mPhotosDeViewer;
-    QProgressDialog * mProcessDialog;
 };
 
 #endif // MAINWINDOW_H
