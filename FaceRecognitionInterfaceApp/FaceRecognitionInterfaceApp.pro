@@ -59,10 +59,8 @@ FORMS    += vue/mainwindow.ui \
     source/vue/identificationeditor.ui
 
 OTHER_FILES += \
-    description.txt \
     .gitignore \
-    README.md \
-    description.txt
+    README.md
 
 QMAKE_CXXFLAGS += -std=c++11
 

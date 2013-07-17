@@ -82,6 +82,7 @@ void Photos::chargerPhotos(QString dossier, QString dossierInformation)
 {
     QDir dir(dossier);
     for(QFileInfo infoFichier : dir.entryInfoList(QDir::Files)) ajouterPhoto(infoFichier.filePath(),dossierInformation+"/"+infoFichier.fileName()+".txt");
+    mIdentificationsNonReconnus.shuffle();
 }
 
 SignalList<QString> &Photos::personnes()
