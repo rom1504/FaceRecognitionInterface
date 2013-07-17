@@ -41,6 +41,7 @@ void MainWindow::detect()
     int remaining=photoFilesNumber-informationsFilesNumber;
     Q_ASSERT(remaining>=0);
     QProgressDialog * processDialog=new QProgressDialog("Détection en cours...",QString(), 0, int(double(remaining)*1.5), this);
+    processDialog->show();
     processDialog->setWindowModality(Qt::WindowModal);
     processDialog->setMinimumDuration(0);
     processDialog->setValue(1);
@@ -70,6 +71,7 @@ void MainWindow::detect()
 void MainWindow::recognize()
 {
     QProgressDialog * processDialog=new QProgressDialog("Reconnaissance en cours...",QString(), 0, 6, this);
+    processDialog->show();
     processDialog->setWindowModality(Qt::WindowModal);
     processDialog->setMinimumDuration(0);
     processDialog->setValue(1);

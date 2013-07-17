@@ -27,6 +27,12 @@ void IdentificationEditor::setIdentification(Identification * identification)
     ui->pushButtonValider->hide();
     ui->lineEditPersonne->hide();
     ui->pushButtonIdentifier->hide();
+    ui->pushButtonIgnorer->hide();
+    if(!mIdentification->valide())
+    {
+        connect(ui->pushButtonIgnorer,&QPushButton::clicked,mIdentification,&Identification::ignorer);
+        ui->pushButtonIgnorer->show();
+    }
     if(!mIdentification->valide() && mIdentification->identifie())
     {
         connect(ui->pushButtonValider,&QPushButton::clicked,mIdentification,&Identification::valider);

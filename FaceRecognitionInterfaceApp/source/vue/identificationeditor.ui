@@ -41,6 +41,13 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="pushButtonIgnorer">
+     <property name="text">
+      <string>Ignorer</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

@@ -15,6 +15,7 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
     const QList<Identification *> & identifications = photo->identifications();
     for(Identification * identification : identifications)
     {
+        if(identification->ignore()) continue;
         if(!identification->identifie()) mIdentificationsNonReconnus.ajout(identification);
         else
         {
@@ -39,8 +40,13 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
         });
 
         connect(identification,&Identification::sinvalide,[this,identification](){
-            mIdentificationsNonValidees.suppression(identification->personne(),identification);// pb ici !
+            mIdentificationsNonValidees.suppression(identification->personne(),identification);
             mIdentificationsNonReconnus.ajout(identification);
+        });
+
+        connect(identification,&Identification::signore,[this,identification](){
+            if(!identification->valide() && identification->identifie()) mIdentificationsNonValidees.suppression(identification->personne(),identification);
+            if(!identification->identifie()) mIdentificationsNonReconnus.suppression(identification);
         });
     }
 }

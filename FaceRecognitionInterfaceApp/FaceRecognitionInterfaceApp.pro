@@ -61,7 +61,8 @@ FORMS    += vue/mainwindow.ui \
 OTHER_FILES += \
     description.txt \
     .gitignore \
-    README.md
+    README.md \
+    description.txt
 
 QMAKE_CXXFLAGS += -std=c++11
 
