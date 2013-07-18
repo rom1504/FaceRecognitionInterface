@@ -10,12 +10,12 @@ Controleur::Controleur(QObject *parent) :
     mMainWindow=new MainWindow();
     mPhotos=new Photos();
     mPhotos->chargerPhotos("donnees/photos","donnees/informations");
-    IdentificationSignalListAdapter::mCachePhotos=mCachePhotos;
-    PhotoSignalListAdapter::mCachePhotos=mCachePhotos;
-    IdentificationEditor::mPersonnes=new QStringSignalListAdapter(&(mPhotos->personnes()));
+    SignalListAdapter<Identification*>::mCachePhotos=mCachePhotos;
+    SignalListAdapter<Photo*>::mCachePhotos=mCachePhotos;
+    IdentificationEditor::mPersonnes=new SignalListAdapter<QString>(&(mPhotos->personnes()));
 
 
-    mMainWindow->setAdapterIdentificationNonReconnues(new IdentificationSignalListAdapter(&(mPhotos->identificationsNonReconnus())));
+    mMainWindow->setAdapterIdentificationNonReconnues(new SignalListAdapter<Identification*>(&(mPhotos->identificationsNonReconnus())));
     mMainWindow->setAdapterIdentificationNonValidees(&(mPhotos->identificationsNonValidees()));
     mMainWindow->setAdapterIdentificationDe(&(mPhotos->identificationsDe()));
     mMainWindow->setAdapterPhotoDe(&(mPhotos->photosDe()));

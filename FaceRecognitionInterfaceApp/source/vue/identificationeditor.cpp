@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QCompleter>
 
-QStringSignalListAdapter * IdentificationEditor::mPersonnes;
+SignalListAdapter<QString> * IdentificationEditor::mPersonnes;
 
 IdentificationEditor::IdentificationEditor(QWidget *parent) :
     QWidget(parent),

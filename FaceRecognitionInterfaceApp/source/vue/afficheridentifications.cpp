@@ -21,7 +21,7 @@ AfficherIdentifications::AfficherIdentifications(QWidget *parent) :
 }
 
 
-void AfficherIdentifications::setModel(IdentificationSignalListAdapter * adapter)
+void AfficherIdentifications::setModel(SignalListAdapter<Identification *> *adapter)
 {
     ui->listView->setModel(adapter);
 }

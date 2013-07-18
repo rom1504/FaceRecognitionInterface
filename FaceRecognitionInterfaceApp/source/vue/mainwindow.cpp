@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     showMaximized();
     ui->setupUi(this);
-    mIdentificationsNonValideesViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
+    mIdentificationsNonValideesViewer=new PersonneMapViewer<Identification*,AfficherIdentifications>();
     ui->stackedWidget->addWidget(mIdentificationsNonValideesViewer);
-    mIdentificationsDeViewer=new PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter>();
+    mIdentificationsDeViewer=new PersonneMapViewer<Identification*,AfficherIdentifications>();
     ui->stackedWidget->addWidget(mIdentificationsDeViewer);
-    mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter>();
+    mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos>();
     ui->stackedWidget->addWidget(mPhotosDeViewer);
 
 
@@ -101,7 +101,7 @@ void MainWindow::setAdapterIdentificationNonValidees(PersonneMap<Identification*
     mIdentificationsNonValideesViewer->setModel(adapter);
 }
 
-void MainWindow::setAdapterIdentificationNonReconnues(IdentificationSignalListAdapter * adapter)
+void MainWindow::setAdapterIdentificationNonReconnues(SignalListAdapter<Identification *> *adapter)
 {
     ui->personneNonReconnuesViewer->setModel(adapter);
 }

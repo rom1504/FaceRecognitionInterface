@@ -10,8 +10,8 @@ class PersonneMapViewer;
 }
 
 
-// hum ça devient moche... voir pour limiter l'utilisation des templates...q
-template <class T,class ViewerType,class ModelType> class PersonneMapViewer : public QWidget
+// voir pour enlever aussi le ViewerType (faire un viewer générique spécialisé dans les 3 types voulus)
+template <class T,class ViewerType> class PersonneMapViewer : public QWidget
 {
 public:
     explicit PersonneMapViewer(QWidget *parent = 0);

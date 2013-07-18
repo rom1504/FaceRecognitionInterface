@@ -15,7 +15,7 @@ class AfficherIdentifications : public QWidget
     
 public:
     explicit AfficherIdentifications(QWidget *parent = 0);
-    void setModel(IdentificationSignalListAdapter * adapter);
+    void setModel(SignalListAdapter<Identification*> * adapter);
     ~AfficherIdentifications();
     
 private:

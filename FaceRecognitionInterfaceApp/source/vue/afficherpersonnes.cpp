@@ -17,7 +17,7 @@ AfficherPersonnes::~AfficherPersonnes()
 }
 
 
-void AfficherPersonnes::setModel(QStringSignalListAdapter *qstringSignalListAdapter)
+void AfficherPersonnes::setModel(SignalListAdapter<QString> *qstringSignalListAdapter)
 {
     ui->listViewPersonne->setModel(qstringSignalListAdapter);
     connect(ui->listViewPersonne->selectionModel(),&QItemSelectionModel::currentChanged,[this](const QModelIndex &,const QModelIndex &){afficherPersonneCourante();});

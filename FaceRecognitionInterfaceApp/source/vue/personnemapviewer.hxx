@@ -4,9 +4,8 @@
 #include "personnemapviewer.h"
 #include "ui_personnemapviewer.h"
 #include "vue/afficherpersonnes.h"
-#include "adapteur/qstringsignallistadapter.h"
 
-template <class T,class ViewerType,class ModelType> PersonneMapViewer<T,ViewerType,ModelType>::PersonneMapViewer(QWidget *parent) :
+template <class T,class ViewerType> PersonneMapViewer<T,ViewerType>::PersonneMapViewer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PersonneMapViewer),
     mViewer(new ViewerType())
@@ -17,20 +16,20 @@ template <class T,class ViewerType,class ModelType> PersonneMapViewer<T,ViewerTy
     ui->horizontalLayout->setStretch(2,1);
 }
 
-template <class T,class ViewerType,class ModelType> void PersonneMapViewer<T,ViewerType,ModelType>::setModel(PersonneMap<T> * personneMap)
+template <class T,class ViewerType> void PersonneMapViewer<T,ViewerType>::setModel(PersonneMap<T> * personneMap)
 {
     mPersonneMap=personneMap;
-    ui->afficherPersonnes->setModel(new QStringSignalListAdapter(mPersonneMap->getPersonnes()));
-    connect(ui->afficherPersonnes,&AfficherPersonnes::afficherPersonne,this,&PersonneMapViewer<T,ViewerType,ModelType>::afficherPersonne);
+    ui->afficherPersonnes->setModel(new SignalListAdapter<QString>(mPersonneMap->getPersonnes()));
+    connect(ui->afficherPersonnes,&AfficherPersonnes::afficherPersonne,this,&PersonneMapViewer<T,ViewerType>::afficherPersonne);
 }
 
-template <class T,class ViewerType,class ModelType> void PersonneMapViewer<T,ViewerType,ModelType>::afficherPersonne(QString personne)
+template <class T,class ViewerType> void PersonneMapViewer<T,ViewerType>::afficherPersonne(QString personne)
 {
-    mViewer->setModel(new ModelType(mPersonneMap->getList(personne)));
+    mViewer->setModel(new SignalListAdapter<T>(mPersonneMap->getList(personne)));
 }
 
 
-template <class T,class ViewerType,class ModelType> PersonneMapViewer<T,ViewerType,ModelType>::~PersonneMapViewer()
+template <class T,class ViewerType> PersonneMapViewer<T,ViewerType>::~PersonneMapViewer()
 {
     delete ui;
 }

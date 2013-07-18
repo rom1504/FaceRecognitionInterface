@@ -1,11 +1,11 @@
 #include "qstringsignallistadapter.h"
 
-QStringSignalListAdapter::QStringSignalListAdapter(SignalList<QString> *list, QObject *parent) :
-    SignalListAdapter(list,parent)
+SignalListAdapter<QString>::SignalListAdapter(SignalList<QString> *list, QObject *parent) :
+    SignalListAdapterBase(list,parent)
 {
 }
 
-QVariant QStringSignalListAdapter::data ( const QModelIndex & index, int role ) const
+QVariant SignalListAdapter<QString>::data ( const QModelIndex & index, int role ) const
 {
     if (!index.isValid())
          return QVariant();

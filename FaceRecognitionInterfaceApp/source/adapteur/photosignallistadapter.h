@@ -5,11 +5,10 @@
 #include "modele/photo.h"
 #include "modele/cachephotos.h"
 
-class PhotoSignalListAdapter : public SignalListAdapter<Photo*>
+template<> class SignalListAdapter<Photo*> : public SignalListAdapterBase<Photo*>
 {
-    Q_OBJECT
 public:
-    explicit PhotoSignalListAdapter(SignalList<Photo*> * list,QObject *parent = 0);
+    explicit SignalListAdapter(SignalList<Photo*> * list,QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     static CachePhotos mCachePhotos;
     

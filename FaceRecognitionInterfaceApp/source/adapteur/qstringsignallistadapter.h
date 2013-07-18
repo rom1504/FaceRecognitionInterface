@@ -6,11 +6,10 @@
 #include "adapter/signallistadapter.h"
 
 
-class QStringSignalListAdapter : public SignalListAdapter<QString>
+template<> class SignalListAdapter<QString> : public SignalListAdapterBase<QString>
 {
-    Q_OBJECT
 public:
-    explicit QStringSignalListAdapter(SignalList<QString> * list,QObject *parent = 0);
+    explicit SignalListAdapter(SignalList<QString> * list,QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
 
 };

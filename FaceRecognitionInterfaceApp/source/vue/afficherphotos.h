@@ -15,7 +15,7 @@ class AfficherPhotos : public QWidget
     
 public:
     explicit AfficherPhotos(QWidget *parent = 0);
-    void setModel(PhotoSignalListAdapter * adapter);
+    void setModel(SignalListAdapter<Photo*> * adapter);
     ~AfficherPhotos();
     
 private:

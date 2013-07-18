@@ -1,13 +1,13 @@
 #include "photosignallistadapter.h"
 
-CachePhotos PhotoSignalListAdapter::mCachePhotos;
+CachePhotos SignalListAdapter<Photo*>::mCachePhotos;
 
-PhotoSignalListAdapter::PhotoSignalListAdapter(SignalList<Photo *> *list, QObject *parent) :
-    SignalListAdapter(list,parent)
+SignalListAdapter<Photo*>::SignalListAdapter(SignalList<Photo *> *list, QObject *parent) :
+    SignalListAdapterBase(list,parent)
 {
 }
 
-QVariant PhotoSignalListAdapter::data ( const QModelIndex & index, int role ) const
+QVariant SignalListAdapter<Photo*>::data ( const QModelIndex & index, int role ) const
 {
     if (!index.isValid())
      return QVariant();

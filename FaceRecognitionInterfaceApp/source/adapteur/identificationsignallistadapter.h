@@ -7,11 +7,10 @@
 #include "adapter/signallistadapter.h"
 
 
-class IdentificationSignalListAdapter : public SignalListAdapter<Identification*>
+template<> class SignalListAdapter<Identification*> : public SignalListAdapterBase<Identification*>
 {
-    Q_OBJECT
 public:
-    explicit IdentificationSignalListAdapter(SignalList<Identification *> *list, QObject *parent = 0);
+    explicit SignalListAdapter(SignalList<Identification *> *list, QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     Qt::ItemFlags flags(const QModelIndex & index) const;
     static CachePhotos mCachePhotos;
@@ -20,5 +19,6 @@ private:
 
     
 };
+//#include "identificationsignallistadapter.hxx"
 
 #endif // IDENTIFICATIONSIGNALLISTADAPTER_H

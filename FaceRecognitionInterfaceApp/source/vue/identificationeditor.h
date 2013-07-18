@@ -21,7 +21,7 @@ public:
 
     Identification * getIdentification() const;
     void setIdentification(Identification * identification);
-    static QStringSignalListAdapter * mPersonnes;
+    static SignalListAdapter<QString> * mPersonnes;
 
     ~IdentificationEditor();
 

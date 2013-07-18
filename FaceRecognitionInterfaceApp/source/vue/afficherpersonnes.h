@@ -16,7 +16,7 @@ public:
     explicit AfficherPersonnes(QWidget *parent = 0);
     ~AfficherPersonnes();
 
-    void setModel(QStringSignalListAdapter *qstringSignalListAdapter);
+    void setModel(SignalListAdapter<QString> *qstringSignalListAdapter);
 
 signals:
     void afficherPersonne(QString personne);

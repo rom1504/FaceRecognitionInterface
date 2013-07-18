@@ -23,7 +23,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setAdapterIdentificationNonReconnues(IdentificationSignalListAdapter * adapter);
+    void setAdapterIdentificationNonReconnues(SignalListAdapter<Identification*> * adapter);
     void setAdapterIdentificationNonValidees(PersonneMap<Identification*> * adapter);
     void setAdapterPhotoDe(PersonneMap<Photo*> * adapter);
     void setAdapterIdentificationDe(PersonneMap<Identification*> * adapter);
@@ -40,9 +40,9 @@ private:
     
 private:
     Ui::MainWindow *ui;
-    PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsNonValideesViewer;
-    PersonneMapViewer<Identification*,AfficherIdentifications,IdentificationSignalListAdapter> * mIdentificationsDeViewer;
-    PersonneMapViewer<Photo*,AfficherPhotos,PhotoSignalListAdapter> * mPhotosDeViewer;
+    PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsNonValideesViewer;
+    PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsDeViewer;
+    PersonneMapViewer<Photo*,AfficherPhotos> * mPhotosDeViewer;
 };
 
 #endif // MAINWINDOW_H
