@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QProgressDialog>
 #include "modele/photos.h"
-#include "adapteur/qstringsignallistadapter.h"
+#include "adapter/qstringsignallistadapter.h"
 #include "adapteur/identificationsignallistadapter.h"
 #include "adapteur/photosignallistadapter.h"
 #include "vue/afficheridentifications.h"

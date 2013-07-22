@@ -2,7 +2,7 @@
 #define AFFICHERPERSONNES_H
 
 #include <QWidget>
-#include "adapteur/qstringsignallistadapter.h"
+#include "adapter/qstringsignallistadapter.h"
 
 namespace Ui {
 class AfficherPersonnes;

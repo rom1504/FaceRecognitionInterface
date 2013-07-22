@@ -26,7 +26,6 @@ SOURCES += main.cpp \
     source/modele/identification.cpp \
     source/modele/cachephotos.cpp \
     source/modele/photo.cpp \
-    source/adapteur/qstringsignallistadapter.cpp \
     source/adapteur/identificationsignallistadapter.cpp \
     source/adapteur/photosignallistadapter.cpp \
     source/vue/afficheridentifications.cpp \
@@ -42,7 +41,6 @@ HEADERS  += vue/mainwindow.h \
     source/modele/photo.h \
     source/modele/personnemap.h \
     source/modele/personnemap.hxx \
-    source/adapteur/qstringsignallistadapter.h \
     source/adapteur/identificationsignallistadapter.h \
     source/adapteur/photosignallistadapter.h \
     source/vue/afficheridentifications.h \

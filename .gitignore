@@ -1,3 +1,6 @@
 description.txt
 *.pro.user
 donnees/
+FaceRecognitionInterfaceApp/qdocmanual.qdoc
+FaceRecognitionInterfaceApp/doc/
+FaceRecognitionInterfaceApp/FaceRecognitionInterfaceApp.qdocconf

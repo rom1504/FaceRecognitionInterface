@@ -4,7 +4,7 @@
 #include <QWidget>
 
 #include "modele/identification.h"
-#include "adapteur/qstringsignallistadapter.h"
+#include "adapter/qstringsignallistadapter.h"
 
 namespace Ui {
 class IdentificationEditor;
