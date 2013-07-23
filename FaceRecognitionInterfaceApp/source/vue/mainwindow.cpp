@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "vue/personnemapviewer.h"
+#include "vue/progressdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,55 +37,55 @@ void MainWindow::detect()
 {
     QDir dir("donnees/photos");
     int photoFilesNumber=dir.entryList().count()-2;
-    dir.cd("../informations");
-    int informationsFilesNumber=dir.entryList().count()-2;
+    int informationsFilesNumber;
+    if(dir.exists("../informations"))
+    {
+        dir.cd("../informations");
+        informationsFilesNumber=dir.entryList().count()-2;
+    }
+    else informationsFilesNumber=0;
     int remaining=photoFilesNumber-informationsFilesNumber;
     Q_ASSERT(remaining>=0);
-    QProgressDialog * processDialog=new QProgressDialog("Détection en cours...",QString(), 0, int(double(remaining)*1.5), this);
-    processDialog->show();
-    processDialog->setWindowModality(Qt::WindowModal);
-    processDialog->setMinimumDuration(0);
-    processDialog->setValue(1);
-    processDialog->setValue(2);
+    ProgressDialog * progressDialog=new ProgressDialog("Détection","Détection en cours...",0, int(double(remaining)*1.5),1, this);
+    progressDialog->start();
     QProcess *process = new QProcess();
-    double *avancement=new double(processDialog->value());
+    double *avancement=new double(progressDialog->value());
     int *num=new int(0);
-    connect(process,&QProcess::readyReadStandardOutput,[processDialog,num,remaining,avancement,process,this](){
+    connect(process,&QProcess::readyReadStandardOutput,[progressDialog,num,remaining,avancement,process,this](){
         // voir pour faire péter la compilation de la chaine : ce serait plutôt une étape d'installation
-        if(processDialog->value()>=processDialog->maximum()-1) processDialog->setMaximum(int(double(processDialog->maximum())*1.2));
+        if(progressDialog->value()>=progressDialog->maximum()-1) progressDialog->setMaximum(int(double(progressDialog->maximum())*1.2));
         (*num)++;
         (*avancement)+=(*num)>remaining ? 0.2 : 1.0;
-        processDialog->setValue(int(*avancement));
+        progressDialog->setValue(int(*avancement));
         // améliorable en lisant le début du découpage et en divisant le progrés par 2 ou qq chose comme ça
         process->readAllStandardOutput();
         // faire une estimation initiale via fileNumber*2 puis une fois qu'on a récupéré les infos ajuster via setMaximum : non inutile, je crois que ce qui prends du temps c'est la première partie, on peut considérer qu'il reste fileNumber/10 étape ensuite, qu'on peut remplir d'un coup
     });
     process->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
     void (QProcess:: *f)(int) = &QProcess::finished;
-    connect(process,f,[this,processDialog](int){
+    connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();
-        processDialog->setValue(processDialog->maximum());
+        progressDialog->setValue(progressDialog->maximum());
+        progressDialog->end();
         QMessageBox::information(this,"Détection terminé","La détection de visage est terminée");// indiquer des infos (nombre de photo dont on va vraiment fait la détection, sur combien, combien de temps pris,...)
     });
 }
 
 void MainWindow::recognize()
 {
-    QProgressDialog * processDialog=new QProgressDialog("Reconnaissance en cours...",QString(), 0, 6, this);
-    processDialog->show();
-    processDialog->setWindowModality(Qt::WindowModal);
-    processDialog->setMinimumDuration(0);
-    processDialog->setValue(1);
+    ProgressDialog * progressDialog=new ProgressDialog("Reconnaissance","Reconnaissance en cours...", 0, 5,0, this);
+    progressDialog->start();
     QProcess *process = new QProcess();
-    connect(process,&QProcess::readyReadStandardOutput,[processDialog,process](){
-        processDialog->setValue(processDialog->value()+1);
+    connect(process,&QProcess::readyReadStandardOutput,[progressDialog,process](){
+        progressDialog->setValue(progressDialog->value()+1);
         process->readAllStandardOutput();
     });
     process->start("bash facerecognition/source/chaineSimplifie.sh donnees/informations donnees/photosDecoupees donnees/modele donnees/intermediaire");
     void (QProcess:: *f)(int) = &QProcess::finished;
-    connect(process,f,[this,processDialog](int){
+    connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();
-        processDialog->setValue(processDialog->maximum());
+        progressDialog->setValue(progressDialog->maximum());
+        progressDialog->end();
         QMessageBox::information(this,"Reconnaissance terminé","La reconnaissance de visage est terminée");
     });
 }

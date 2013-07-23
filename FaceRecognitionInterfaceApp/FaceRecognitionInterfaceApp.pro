@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     source/adapteur/photosignallistadapter.cpp \
     source/vue/afficheridentifications.cpp \
     source/vue/afficherphotos.cpp \
-    source/vue/identificationeditor.cpp
+    source/vue/identificationeditor.cpp \
+    source/vue/progressdialog.cpp
 
 HEADERS  += vue/mainwindow.h \
     controleur/controleur.h \
@@ -47,14 +48,16 @@ HEADERS  += vue/mainwindow.h \
     source/vue/afficherphotos.h \
     source/vue/personnemapviewer.h \
     source/vue/personnemapviewer.hxx \
-    source/vue/identificationeditor.h
+    source/vue/identificationeditor.h \
+    source/vue/progressdialog.h
 
 FORMS    += vue/mainwindow.ui \
     vue/afficherpersonnes.ui \
     source/vue/afficheridentifications.ui \
     source/vue/afficherphotos.ui \
     source/vue/personnemapviewer.ui \
-    source/vue/identificationeditor.ui
+    source/vue/identificationeditor.ui \
+    source/vue/progressdialog.ui
 
 OTHER_FILES += \
     .gitignore \
