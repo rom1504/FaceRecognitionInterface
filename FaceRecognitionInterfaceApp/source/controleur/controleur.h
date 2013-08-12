@@ -22,7 +22,6 @@ private:
     MainWindow * mMainWindow;
     Photos * mPhotos;
     QString mPersonne;
-    CachePhotos mCachePhotos;
 
 };
 

@@ -75,3 +75,6 @@ DEPENDPATH += $$PWD/../SignalList/source
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../SignalList/release/SignalList.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../SignalList/debug/SignalList.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../SignalList/libSignalList.a
+
+RESOURCES += \
+    ressources.qrc

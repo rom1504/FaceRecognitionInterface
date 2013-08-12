@@ -1,5 +1,6 @@
 #include "identificationeditor.h"
 #include "ui_identificationeditor.h"
+#include "modele/cachephotos.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -12,6 +13,7 @@ IdentificationEditor::IdentificationEditor(QWidget *parent) :
     ui(new Ui::IdentificationEditor),
     mIdentification(nullptr)
 {
+//    setAutoFillBackground(true);
     ui->setupUi(this);
 }
 
@@ -23,6 +25,10 @@ Identification * IdentificationEditor::getIdentification() const
 void IdentificationEditor::setIdentification(Identification * identification)
 {
     mIdentification=identification;
+//    QPixmap pm;
+//    CachePhotos::getPhoto(identification->nomFichierDecoupee()+"_thumb2",pm);
+    ui->labelmage->hide();
+//    ui->labelmage->setPixmap(pm);
     ui->pushButtonInvalider->hide();
     ui->pushButtonValider->hide();
     ui->lineEditPersonne->hide();

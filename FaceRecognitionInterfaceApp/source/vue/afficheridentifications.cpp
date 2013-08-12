@@ -11,6 +11,11 @@ AfficherIdentifications::AfficherIdentifications(QWidget *parent) :
     ui(new Ui::AfficherIdentifications)
 {
     ui->setupUi(this);
+    ui->pushButtonIdentifier->hide();
+    ui->pushButtonIgnorer->hide();
+    ui->pushButtonInvalider->hide();
+    ui->pushButtonValider->hide();
+    ui->lineEditPersonne->hide();
     ui->listView->setViewMode(QListView::IconMode);
 
     QItemEditorFactory * factory=new QItemEditorFactory();

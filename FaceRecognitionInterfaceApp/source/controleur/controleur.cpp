@@ -10,8 +10,6 @@ Controleur::Controleur(QObject *parent) :
     mMainWindow=new MainWindow();
     mPhotos=new Photos();
     mPhotos->chargerPhotos("donnees/photos","donnees/informations");
-    SignalListAdapter<Identification*>::mCachePhotos=mCachePhotos;
-    SignalListAdapter<Photo*>::mCachePhotos=mCachePhotos;
     IdentificationEditor::mPersonnes=new SignalListAdapter<QString>(&(mPhotos->personnes()));
 
 

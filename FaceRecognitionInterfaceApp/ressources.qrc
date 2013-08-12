@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icones/identify.png</file>
+        <file>icones/ignore.png</file>
+        <file>icones/invalidate.png</file>
+        <file>icones/validate.png</file>
+    </qresource>
+</RCC>

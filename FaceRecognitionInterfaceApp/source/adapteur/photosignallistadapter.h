@@ -10,8 +10,7 @@ template<> class SignalListAdapter<Photo*> : public SignalListAdapterBase<Photo*
 public:
     explicit SignalListAdapter(SignalList<Photo*> * list,QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-    static CachePhotos mCachePhotos;
-    
+
 private:
     
 };

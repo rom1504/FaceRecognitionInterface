@@ -1,8 +1,8 @@
 #include <QDebug>
+#include <QBrush>
 
 #include "identificationsignallistadapter.h"
 
-CachePhotos SignalListAdapter<Identification*>::mCachePhotos;
 
 SignalListAdapter<Identification*>::SignalListAdapter(SignalList<Identification *> *list, QObject *parent) :
     SignalListAdapterBase(list,parent)
@@ -19,10 +19,20 @@ QVariant SignalListAdapter<Identification*>::data ( const QModelIndex & index, i
 
     if(role == Qt::DecorationRole)
     {
-        QPixmap image=mCachePhotos.getPhoto(mList->get(index.row())->nomFichierDecoupee());
-        if(!image.isNull()) image=image.scaledToWidth(200);
+        QPixmap image;
+        CachePhotos::getPhoto(mList->get(index.row())->nomFichierDecoupee()+"_thumb",image);
+//        return QBrush(image);
+//        return QVariant();
         return image;
     }
+//    if(role == Qt::SizeHintRole)
+//    {
+//        return QSize(200,200);
+//    }
+//    if(role == Qt::DisplayRole)
+//    {
+//        return "salut !";
+//    }
     if (role == Qt::EditRole) return QVariant::fromValue(mList->get(index.row()));
     return QVariant();
 }

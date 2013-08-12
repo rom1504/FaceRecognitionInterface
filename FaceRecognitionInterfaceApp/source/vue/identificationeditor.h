@@ -21,7 +21,7 @@ public:
 
     Identification * getIdentification() const;
     void setIdentification(Identification * identification);
-    static SignalListAdapter<QString> * mPersonnes;
+    static SignalListAdapter<QString> * mPersonnes;// comment changer ça ?
 
     ~IdentificationEditor();
 

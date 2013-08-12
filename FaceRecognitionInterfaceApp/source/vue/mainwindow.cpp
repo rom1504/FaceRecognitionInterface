@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QDir>
+#include <QPixmapCache>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(mIdentificationsDeViewer);
     mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos>();
     ui->stackedWidget->addWidget(mPhotosDeViewer);
+    QPixmapCache::setCacheLimit(100000);
 
 
     connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(0);});

@@ -11,19 +11,13 @@
 class CachePhotos
 {
 public:
-    CachePhotos();
     /**
-     * @brief getPhoto récupère la photo associé à un chemin (si elle n'est pas stocké dans la qmap alors on la crée)
+     * @brief getPhoto récupère la photo associé à un chemin (si elle n'est pas stocké alors on la crée)
      * @param chemin chemin d'une photo
      * @return l'image voulue
      */
-    QPixmap &getPhoto(QString chemin);
+    static void getPhoto(QString chemin,QPixmap & pm);
 
-private:
-    /**
-     * @brief mPhotos contient les photos associé à leur nom de fichier
-     */
-    QMap<QString,QPixmap> mPhotos;
 };
 
 #endif // CACHEPHOTOS_H

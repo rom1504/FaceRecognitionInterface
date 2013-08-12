@@ -13,7 +13,6 @@ public:
     explicit SignalListAdapter(SignalList<Identification *> *list, QObject *parent = 0);
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     Qt::ItemFlags flags(const QModelIndex & index) const;
-    static CachePhotos mCachePhotos;
     
 private:
 

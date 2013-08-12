@@ -13,7 +13,58 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButtonValider">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ressources.qrc">
+         <normaloff>:/icones/validate.png</normaloff>:/icones/validate.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonInvalider">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ressources.qrc">
+         <normaloff>:/icones/invalidate.png</normaloff>:/icones/invalidate.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditPersonne"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonIdentifier">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ressources.qrc">
+         <normaloff>:/icones/identify.png</normaloff>:/icones/identify.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonIgnorer">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../ressources.qrc">
+         <normaloff>:/icones/ignore.png</normaloff>:/icones/ignore.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QListView" name="listView">
      <property name="editTriggers">
@@ -26,6 +77,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
