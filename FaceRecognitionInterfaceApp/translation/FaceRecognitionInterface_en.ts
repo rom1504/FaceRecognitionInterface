@@ -48,7 +48,7 @@
     <message>
         <location filename="../source/vue/mainwindow.ui" line="50"/>
         <source>Verifier reconnaissance</source>
-        <translation>Check tagging</translation>
+        <translation>Check tags</translation>
     </message>
     <message>
         <location filename="../source/vue/mainwindow.ui" line="55"/>
@@ -68,17 +68,17 @@
     <message>
         <location filename="../source/vue/mainwindow.ui" line="70"/>
         <source>Afficher les identifications non reconnues</source>
-        <translation>Show unrecognized taggings</translation>
+        <translation>Show unrecognized tags</translation>
     </message>
     <message>
         <location filename="../source/vue/mainwindow.ui" line="75"/>
         <source>Afficher les identifications non validées</source>
-        <translation>Show non validated taggings</translation>
+        <translation>Show non validated tags</translation>
     </message>
     <message>
         <location filename="../source/vue/mainwindow.ui" line="80"/>
         <source>Afficher les identifications validées</source>
-        <translation>Show validated taggings</translation>
+        <translation>Show validated tags</translation>
     </message>
     <message>
         <location filename="../source/vue/mainwindow.ui" line="85"/>
