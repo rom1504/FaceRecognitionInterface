@@ -1,9 +1,9 @@
 [submodule "facedetect"]
 	path = facedetect
-	url = git@github.com:rom1504/facedetect.git
+	url = git@github.com:rom1504/FaceDetect.git
 [submodule "SignalList"]
 	path = SignalList
-	url = git@github.com:rom1504/signallist.git
+	url = git@github.com:rom1504/SignalList.git
 [submodule "facerecognition"]
 	path = facerecognition
-	url = git@github.com:rom1504/facerecognition.git
+	url = git@github.com:rom1504/FaceRecognition.git
