@@ -1,7 +1,7 @@
 # FaceRecognitionInterface
 Face recognition software
 
-A software that handle the whole process of tagging peoples on pictures.
+A software that handle the whole process of tagging people on pictures.
 
 ## Features
 
