@@ -78,3 +78,5 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../SignalList/libSignalList.a
 
 RESOURCES += \
     ressources.qrc
+
+TRANSLATIONS += translation/FaceRecognitionInterface_en.ts

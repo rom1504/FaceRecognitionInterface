@@ -4,5 +4,6 @@
         <file>icones/ignore.png</file>
         <file>icones/invalidate.png</file>
         <file>icones/validate.png</file>
+        <file>translation/FaceRecognitionInterface_en.qm</file>
     </qresource>
 </RCC>
