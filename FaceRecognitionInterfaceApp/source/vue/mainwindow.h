@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent = 0);
     ~MainWindow();
 
     void setAdapterIdentificationNonReconnues(SignalListAdapter<Identification*> * adapter);
@@ -43,6 +43,11 @@ private:
     PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsNonValideesViewer;
     PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsDeViewer;
     PersonneMapViewer<Photo*,AfficherPhotos> * mPhotosDeViewer;
+    QString mCheminPhotos;
+    QString mCheminPhotoDecoupees;
+    QString mCheminInformation;
+    QString mCheminIntermediaire;
+    QString mCheminModele;
 };
 
 #endif // MAINWINDOW_H

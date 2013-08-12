@@ -7,9 +7,16 @@
 Controleur::Controleur(QObject *parent) :
     QObject(parent)
 {
-    mMainWindow=new MainWindow();
+    QString cheminPhotos="donnees/photos";
+    QString cheminPhotoDecoupees="donnees/photosDecoupees";
+    QString cheminInformation="donnees/informations";
+    QString cheminIntermediaire="donnees/intermediaire";
+    QString cheminModele="donnees/modele";
+
+
+    mMainWindow=new MainWindow(cheminPhotos,cheminPhotoDecoupees,cheminInformation,cheminIntermediaire,cheminModele);
     mPhotos=new Photos();
-    mPhotos->chargerPhotos("donnees/photos","donnees/informations");
+    mPhotos->chargerPhotos(cheminPhotos,cheminInformation);
     IdentificationEditor::mPersonnes=new SignalListAdapter<QString>(&(mPhotos->personnes()));
 
 
@@ -18,9 +25,9 @@ Controleur::Controleur(QObject *parent) :
     mMainWindow->setAdapterIdentificationDe(&(mPhotos->identificationsDe()));
     mMainWindow->setAdapterPhotoDe(&(mPhotos->photosDe()));
 
-    connect(mMainWindow,&MainWindow::reloadPhotos,[this](){
+    connect(mMainWindow,&MainWindow::reloadPhotos,[this,cheminPhotos,cheminInformation](){
         mPhotos->clear();
-        mPhotos->chargerPhotos("donnees/photos","donnees/informations");
+        mPhotos->chargerPhotos(cheminPhotos,cheminInformation);
     });
 
 }

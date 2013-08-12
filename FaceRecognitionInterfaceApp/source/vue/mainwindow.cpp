@@ -11,9 +11,14 @@
 #include "vue/personnemapviewer.h"
 #include "vue/progressdialog.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    mCheminPhotos(cheminPhotos),
+    mCheminPhotoDecoupees(cheminPhotoDecoupees),
+    mCheminInformation(cheminInformation),
+    mCheminIntermediaire(cheminIntermediaire),
+    mCheminModele(cheminModele)
 {
     showMaximized();
     ui->setupUi(this);
@@ -23,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(mIdentificationsDeViewer);
     mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos>();
     ui->stackedWidget->addWidget(mPhotosDeViewer);
+
+
+
     QPixmapCache::setCacheLimit(100000);
 
 
@@ -37,13 +45,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::detect()
 {
-    QDir dir("donnees/photos");
+    QDir dir(mCheminPhotos);
     int photoFilesNumber=dir.entryList().count()-2;
     int informationsFilesNumber;
-    if(dir.exists("../informations"))
+    QDir dir2;
+    if(dir2.exists(mCheminInformation))
     {
-        dir.cd("../informations");
-        informationsFilesNumber=dir.entryList().count()-2;
+        dir2.cd(mCheminInformation);
+        informationsFilesNumber=dir2.entryList().count()-2;
     }
     else informationsFilesNumber=0;
     int remaining=photoFilesNumber-informationsFilesNumber;
@@ -63,7 +72,7 @@ void MainWindow::detect()
         process->readAllStandardOutput();
         // faire une estimation initiale via fileNumber*2 puis une fois qu'on a récupéré les infos ajuster via setMaximum : non inutile, je crois que ce qui prends du temps c'est la première partie, on peut considérer qu'il reste fileNumber/10 étape ensuite, qu'on peut remplir d'un coup
     });
-    process->start("bash facedetect/source/chaineSimplifie.sh donnees/photos donnees/photosDecoupees donnees/informations");
+    process->start("bash facedetect/source/chaineSimplifie.sh "+mCheminPhotos+" "+mCheminPhotoDecoupees+" "+mCheminInformation);
     void (QProcess:: *f)(int) = &QProcess::finished;
     connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();
@@ -82,7 +91,7 @@ void MainWindow::recognize()
         progressDialog->setValue(progressDialog->value()+1);
         process->readAllStandardOutput();
     });
-    process->start("bash facerecognition/source/chaineSimplifie.sh donnees/informations donnees/photosDecoupees donnees/modele donnees/intermediaire");
+    process->start("bash facerecognition/source/chaineSimplifie.sh "+mCheminInformation+" "+mCheminPhotoDecoupees+" "+mCheminModele+" "+mCheminIntermediaire);
     void (QProcess:: *f)(int) = &QProcess::finished;
     connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();
