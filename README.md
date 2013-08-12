@@ -1,8 +1,7 @@
 # FaceRecognitionInterface
 Face recognition software
 
-The objective is to make a software like picasa but that can really run on linux and that can handle many files (picasa get stuck when there are too many files, and sometimes it "forgets" tags)
-
+A software that handle the whole process of tagging peoples on pictures.
 
 ## Features
 
