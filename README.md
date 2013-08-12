@@ -27,7 +27,7 @@ A software that handle the whole process of tagging people on pictures.
 You need to install Qt5.1
 
 
-* git clone --recursive
+* git clone --recursive git@github.com:rom1504/FaceRecognitionInterface.git
 * cd facerecognitioninterface
 * qmake && make
 * mkdir donnees
