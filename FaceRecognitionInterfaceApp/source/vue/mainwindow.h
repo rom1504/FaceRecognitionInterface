@@ -7,6 +7,7 @@
 #include "adapter/qstringsignallistadapter.h"
 #include "adapteur/identificationsignallistadapter.h"
 #include "adapteur/photosignallistadapter.h"
+#include "adapter/signallistfilter.h"
 #include "vue/afficheridentifications.h"
 #include "vue/afficherphotos.h"
 #include "vue/personnemapviewer.h"
@@ -25,14 +26,20 @@ public:
 
     void setAdapterIdentificationNonReconnues(SignalListAdapter<Identification*> * adapter);
     void setAdapterIdentificationNonValidees(PersonneMap<Identification*> * adapter);
+    void setAdapterPhotos(SignalListAdapter<Photo*> * adapter);
     void setAdapterPhotoDe(PersonneMap<Photo*> * adapter);
     void setAdapterIdentificationDe(PersonneMap<Identification*> * adapter);
+    void setAdapterSearch(SignalListFilter<Photo*> * adapter);
+
+
+    void showSearchView();
 
     void run();
 
 signals:
     void verifierReconnaissance();
     void reloadPhotos();
+    void rechercher(QStringList * personnes);
 
 private:
     void detect();
@@ -40,9 +47,11 @@ private:
     
 private:
     Ui::MainWindow *ui;
-    PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsNonValideesViewer;
+    PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsNonValideesViewer;// pourquoi valeurs pas pointeurs ?
     PersonneMapViewer<Identification*,AfficherIdentifications> * mIdentificationsDeViewer;
     PersonneMapViewer<Photo*,AfficherPhotos> * mPhotosDeViewer;
+    AfficherPhotos * mSearchView;
+    AfficherPhotos * mAllPhotosView;
     QString mCheminPhotos;
     QString mCheminPhotoDecoupees;
     QString mCheminInformation;

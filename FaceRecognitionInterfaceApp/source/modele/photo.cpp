@@ -1,6 +1,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QSet>
+#include <QStringList>
 
 #include "photo.h"
 
@@ -26,6 +28,15 @@ void Photo::ajouterIdentification(Identification * identification)
 const QList<Identification *> & Photo::identifications() const
 {
     return mIdentifications;
+}
+
+
+bool Photo::containsPersons(QStringList *persons) const
+{
+    QSet<QString> s1,s2;
+    for(QString person : *persons) s1<<person;
+    for(Identification * identification : mIdentifications) s2<<identification->personne();
+    return s2.contains(s1);
 }
 
 

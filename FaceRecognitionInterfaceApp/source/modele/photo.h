@@ -38,6 +38,9 @@ public:
      */
     QString nomFichier() const;
 
+
+    bool containsPersons(QStringList * persons) const;
+
 private:
     /**
      * @brief chargerIdentification charge les identifications depuis le fichier information

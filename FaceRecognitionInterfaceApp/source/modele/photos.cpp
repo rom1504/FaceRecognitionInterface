@@ -49,7 +49,9 @@ void Photos::ajouterPhoto(QString nomFichier,QString nomFichierInformation)
             if(!identification->identifie()) mIdentificationsNonReconnus.suppression(identification);
         });
     }
+    mPhotos.ajout(photo);
 }
+
 
 
 void Photos::clear()
@@ -59,8 +61,15 @@ void Photos::clear()
     mIdentificationsDe.clear();
     mPhotosDe.clear();
     mPersonnes.clear();
+    mPhotos.clear();
 }
 
+
+
+SignalList<Photo*> & Photos::photos()
+{
+    return mPhotos;
+}
 
 SignalList<Identification *> &Photos::identificationsNonReconnus()
 {

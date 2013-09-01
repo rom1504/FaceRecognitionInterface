@@ -42,6 +42,10 @@
     <addaction name="separator"/>
     <addaction name="actionDetecter_les_visages"/>
     <addaction name="actionReconnaissance_automatique"/>
+    <addaction name="separator"/>
+    <addaction name="actionAfficher_la_recherche"/>
+    <addaction name="actionRechercher"/>
+    <addaction name="actionAfficher_toutes_les_photos"/>
    </widget>
    <addaction name="menuFichier"/>
   </widget>
@@ -88,6 +92,21 @@
   <action name="actionReconnaissance_automatique">
    <property name="text">
     <string>Reconnaissance automatique</string>
+   </property>
+  </action>
+  <action name="actionAfficher_la_recherche">
+   <property name="text">
+    <string>Afficher la recherche</string>
+   </property>
+  </action>
+  <action name="actionRechercher">
+   <property name="text">
+    <string>Rechercher</string>
+   </property>
+  </action>
+  <action name="actionAfficher_toutes_les_photos">
+   <property name="text">
+    <string>Afficher toutes les photos</string>
    </property>
   </action>
  </widget>

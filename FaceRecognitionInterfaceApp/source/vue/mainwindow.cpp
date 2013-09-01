@@ -10,6 +10,7 @@
 #include "ui_mainwindow.h"
 #include "vue/personnemapviewer.h"
 #include "vue/progressdialog.h"
+#include "vue/personsearch.h"
 
 MainWindow::MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent) :
     QMainWindow(parent),
@@ -28,19 +29,30 @@ MainWindow::MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString
     ui->stackedWidget->addWidget(mIdentificationsDeViewer);
     mPhotosDeViewer=new PersonneMapViewer<Photo*,AfficherPhotos>();
     ui->stackedWidget->addWidget(mPhotosDeViewer);
+    mSearchView=new AfficherPhotos();
+    ui->stackedWidget->addWidget(mSearchView);
+    mAllPhotosView=new AfficherPhotos();
+    ui->stackedWidget->addWidget(mAllPhotosView);
 
 
 
-    QPixmapCache::setCacheLimit(100000);
+    QPixmapCache::setCacheLimit(1000000000);
 
 
     connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(0);});
     connect(ui->actionAfficher_les_identifications_non_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(1);});
     connect(ui->actionAfficher_les_identifications_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(2);});
     connect(ui->actionAfficher_les_photos_validees,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(3);});
+    connect(ui->actionAfficher_la_recherche,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(4);});
+    connect(ui->actionAfficher_toutes_les_photos,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(5);});
     ui->stackedWidget->hide();
     connect(ui->actionDetecter_les_visages,&QAction::triggered,this,&MainWindow::detect);
     connect(ui->actionReconnaissance_automatique,&QAction::triggered,this,&MainWindow::recognize);
+
+    connect(ui->actionRechercher,&QAction::triggered,[this](){
+        QStringList * persons;
+        if((persons=PersonSearch::get())!=nullptr) emit rechercher(persons);
+    });
 }
 
 void MainWindow::detect()
@@ -105,6 +117,22 @@ void MainWindow::run()
 {
     QTimer::singleShot(200, ui->stackedWidget, SLOT(show()));
     show();
+}
+
+void MainWindow::setAdapterSearch(SignalListFilter<Photo*> * adapter)
+{
+    mSearchView->setModel(adapter);
+}
+
+void MainWindow::showSearchView()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::setAdapterPhotos(SignalListAdapter<Photo*> * adapter)
+{
+    mAllPhotosView->setModel(adapter);
 }
 
 

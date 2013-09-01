@@ -9,7 +9,7 @@ AfficherPhotos::AfficherPhotos(QWidget *parent) :
 }
 
 
-void AfficherPhotos::setModel(SignalListAdapter<Photo *> *adapter)
+void AfficherPhotos::setModel(QAbstractItemModel *adapter)
 {
     ui->listView->setModel(adapter);
 }

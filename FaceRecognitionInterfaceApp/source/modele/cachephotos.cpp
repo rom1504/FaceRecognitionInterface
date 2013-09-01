@@ -5,7 +5,7 @@
 
 void CachePhotos::getPhoto(QString chemin, QPixmap &pm)
 {
-    if (!QPixmapCache::find(chemin, pm))
+    if (!QPixmapCache::find(chemin,pm))
     {
 
         if(chemin.section("_",-1)=="thumb")
@@ -15,7 +15,7 @@ void CachePhotos::getPhoto(QString chemin, QPixmap &pm)
             if(!photo.isNull())
             {
                 pm=photo.scaledToWidth(200);
-                QPixmapCache::insert(chemin,pm);
+                qDebug()<<"plop "<<chemin<<"\n";
             }
         }
         else if(chemin.section("_",-1)=="thumb2")

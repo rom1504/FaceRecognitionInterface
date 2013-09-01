@@ -39,6 +39,7 @@ public:
 
     PersonneMap<Identification *> & identificationsDe();
     PersonneMap<Photo *> & photosDe();
+    SignalList<Photo*> & photos();
     SignalList<Identification*> & identificationsNonReconnus();
     PersonneMap<Identification*> & identificationsNonValidees();
 
@@ -73,6 +74,9 @@ protected:
      * @brief mPhotosDe contient les photos associées aux personnes (validées et reconnues)
      */
     PersonneMap<Photo*>  mPhotosDe;
+
+    SignalList<Photo*> mPhotos;
+
     /**
      * @brief mPersonnes contient l'ensemble des personnes (utilisé pour proposer des personnes pour la reconnaissance manuelle)
      */
