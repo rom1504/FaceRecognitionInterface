@@ -66,4 +66,6 @@ private:
     QString mNomFichier;
 };
 
+Q_DECLARE_METATYPE (Photo*)
+
 #endif // PHOTO_H

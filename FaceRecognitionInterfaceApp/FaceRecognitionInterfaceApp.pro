@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     source/vue/identificationeditor.cpp \
     source/vue/progressdialog.cpp \
     source/vue/personsearch.cpp \
-    source/adapteur/checkablestringsignallistadapter.cpp
+    source/adapteur/checkablestringsignallistadapter.cpp \
+    source/vue/photoview.cpp
 
 HEADERS  += vue/mainwindow.h \
     controleur/controleur.h \
@@ -53,7 +54,8 @@ HEADERS  += vue/mainwindow.h \
     source/vue/identificationeditor.h \
     source/vue/progressdialog.h \
     source/vue/personsearch.h \
-    source/adapteur/checkablestringsignallistadapter.h
+    source/adapteur/checkablestringsignallistadapter.h \
+    source/vue/photoview.h
 
 FORMS    += vue/mainwindow.ui \
     vue/afficherpersonnes.ui \
@@ -62,7 +64,8 @@ FORMS    += vue/mainwindow.ui \
     source/vue/personnemapviewer.ui \
     source/vue/identificationeditor.ui \
     source/vue/progressdialog.ui \
-    source/vue/personsearch.ui
+    source/vue/personsearch.ui \
+    source/vue/photoview.ui
 
 OTHER_FILES += \
     .gitignore \

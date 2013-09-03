@@ -2,8 +2,10 @@
 #define AFFICHERPHOTOS_H
 
 #include <QWidget>
+#include <QListView>
 
 #include "adapteur/photosignallistadapter.h"
+#include "vue/photoview.h"
 
 namespace Ui {
 class AfficherPhotos;
@@ -20,6 +22,9 @@ public:
     
 private:
     Ui::AfficherPhotos *ui;
+    QListView * mListView;
+    PhotoView * mPhotoView;
+
 };
 
 #endif // AFFICHERPHOTOS_H

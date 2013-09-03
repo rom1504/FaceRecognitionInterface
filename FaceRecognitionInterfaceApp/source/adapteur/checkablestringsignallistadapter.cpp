@@ -14,6 +14,7 @@ QVariant CheckableStringSignalListAdapter::data ( const QModelIndex & index, int
      if (index.row() >= mList->nombre())
          return QVariant();
 
+     if(role==FullItemRole) return QVariant::fromValue(mList->get(index.row()));
      if(role == Qt::DisplayRole) return mList->get(index.row());
      if(role == Qt::CheckStateRole ) return mCheckList.contains(mList->get(index.row())) && mCheckList[mList->get(index.row())] ? Qt::Checked : Qt::Unchecked;
      else return QVariant();

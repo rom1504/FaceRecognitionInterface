@@ -14,6 +14,7 @@ QVariant SignalListAdapter<Photo*>::data ( const QModelIndex & index, int role )
     if (index.row() >= mList->nombre())
        return QVariant();
 
+    if(role==FullItemRole) return QVariant::fromValue(mList->get(index.row()));
     if(role == Qt::DecorationRole)
     {
         QPixmap image;
