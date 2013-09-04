@@ -40,6 +40,7 @@ public:
 
 
     bool containsPersons(QStringList * persons) const;
+    Identification * containsPersonAtPoint(QPoint p) const;
 
 private:
     /**

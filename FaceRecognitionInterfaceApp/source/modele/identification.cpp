@@ -5,10 +5,7 @@
 
 Identification::Identification(double x, double y, double w, double h, QString nomFichierDecoupee, Photo *photoAssocie, QString personne, bool valide, bool ignore, QObject *parent) :
     QObject(parent),
-    mX(x),
-    mY(y),
-    mW(w),
-    mH(h),
+    mRect(x,y,w,h),
     mNomFichierDecoupee(nomFichierDecoupee),
     mPersonne(personne),
     mValide(valide),
@@ -22,10 +19,7 @@ Identification::Identification(QString chaine,Photo *photoAssocie,QObject * pare
 {
 
     QStringList sections(chaine.trimmed().split("\t"));
-    mX=sections[0].toDouble();
-    mY=sections[1].toDouble();
-    mW=sections[2].toDouble();
-    mH=sections[3].toDouble();
+    mRect=QRect(sections[0].toInt(),sections[1].toInt(),sections[2].toInt(),sections[3].toInt());
     mNomFichierDecoupee=sections.size()>4 ? sections[4] : "";
     mPersonne=sections.size()>5 ? sections[5] : "";
     mValide=sections.size()>6 ? (sections[6]=="1" ? true : false) : false;
@@ -40,6 +34,17 @@ void Identification::joindre()
     connect(this,&Identification::svalide,this,&Identification::modifie);
     connect(this,&Identification::sinvalide,this,&Identification::modifie);
     connect(this,&Identification::signore,this,&Identification::modifie);
+}
+
+
+bool Identification::containsPoint(QPoint p) const
+{
+    return mRect.contains(p);
+}
+
+QRect Identification::rect() const
+{
+    return mRect;
 }
 
 QString Identification::nomFichierDecoupee() const
@@ -103,5 +108,5 @@ void Identification::ignorer()
 QString Identification::toQString() const
 {
     QString tab=QString("\t");
-    return QString::number(mX)+tab+QString::number(mY)+tab+QString::number(mW)+tab+QString::number(mH)+tab+mNomFichierDecoupee+tab+mPersonne+tab+(mValide ? "1" : "0")+tab+(mIgnore ? "1" : "0");
+    return QString::number(mRect.top())+tab+QString::number(mRect.left())+tab+QString::number(mRect.width())+tab+QString::number(mRect.height())+tab+mNomFichierDecoupee+tab+mPersonne+tab+(mValide ? "1" : "0")+tab+(mIgnore ? "1" : "0");
 }

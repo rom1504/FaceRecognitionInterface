@@ -23,10 +23,12 @@ void PhotoView::setModel(QAbstractItemModel * adapter)
 void PhotoView::viewPhoto(int num)
 {
     if(mAdapter==nullptr || num>=mAdapter->rowCount() || num<0) return;
-    QPixmap p;
-    CachePhotos::getPhoto(mAdapter->data(mAdapter->index(num,0),FullItemRole).value<Photo*>()->nomFichier()+"_decent",p);
-    ui->photoLabel->setPixmap(p);
+    Photo * photo=mAdapter->data(mAdapter->index(num,0),FullItemRole).value<Photo*>();
+    ui->photoLabel->setPhoto(photo);
     mCurrent=num;
+    QStringList l;
+    for(auto identification : photo->identifications()) if(identification->valide() && !identification->ignore()) l<<identification->personne();
+    ui->personsLabel->setText("Sur cette photo : "+l.join(", "));
 }
 
 PhotoView::~PhotoView()

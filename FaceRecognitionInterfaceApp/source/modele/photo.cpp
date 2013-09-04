@@ -54,6 +54,12 @@ void Photo::chargerIdentification()
 }
 
 
+Identification * Photo::containsPersonAtPoint(QPoint p) const
+{
+    for(Identification * identification : mIdentifications) if(identification->valide() && !identification->ignore() && identification->containsPoint(p)) return identification;
+    return nullptr;
+}
+
 
 void Photo::enregistrer() const
 {

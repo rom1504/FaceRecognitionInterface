@@ -3,7 +3,8 @@
 
 #include <QString>
 #include <QObject>
-//#include "photo.h"
+#include <QRect>
+
 class Photo;
 
 // est ce que cette classe devrait référencer où on a trouver cette identification ?
@@ -55,7 +56,7 @@ public:
     void ignorer();
 
 
-
+    QRect rect() const;
 
     /**
      * @brief personne personne identifié
@@ -90,6 +91,8 @@ public:
 
     QString nomFichierDecoupee() const;
 
+    bool containsPoint(QPoint p) const;
+
 signals:
     /**
      * @brief modifie vient d'etre modifie
@@ -117,22 +120,7 @@ private:
     void joindre();
 
 private:
-    /**
-     * @brief mX position en x
-     */
-    double mX;
-    /**
-     * @brief mY position en y
-     */
-    double mY;
-    /**
-     * @brief mW largeur
-     */
-    double mW;
-    /**
-     * @brief mH hauteur
-     */
-    double mH;
+    QRect mRect;
     /**
      * @brief mNomFichierDecoupee nom du fichier découpé
      */
