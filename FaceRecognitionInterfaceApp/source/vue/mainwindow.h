@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent = 0);
+    explicit MainWindow(QString directoryListFile,QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent = 0);
     ~MainWindow();
 
     void setAdapterIdentificationNonReconnues(SignalListAdapter<Identification*> * adapter);
@@ -52,6 +52,7 @@ private:
     PersonneMapViewer<Photo*,AfficherPhotos> * mPhotosDeViewer;
     AfficherPhotos * mSearchView;
     AfficherPhotos * mAllPhotosView;
+    QString mDirectoryListFile;
     QString mCheminPhotos;
     QString mCheminPhotoDecoupees;
     QString mCheminInformation;

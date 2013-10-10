@@ -2,6 +2,8 @@
 #include "photo.h"
 #include <QDir>
 #include <QDebug>
+#include <QString>
+#include <QDirIterator>
 
 
 Photos::Photos(QObject *parent) :
@@ -89,8 +91,17 @@ PersonneMap<Photo *> & Photos::photosDe()
 
 void Photos::chargerPhotos(QString dossier, QString dossierInformation)
 {
-    QDir dir(dossier);
-    for(QFileInfo infoFichier : dir.entryInfoList(QDir::Files)) ajouterPhoto(infoFichier.filePath(),dossierInformation+"/"+infoFichier.fileName()+".txt");
+    QDirIterator it(dossier, QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
+    while(it.hasNext())
+    {
+        if(it.fileInfo().isFile())
+        {
+            QString s=it.fileInfo().filePath();
+            s.replace(dossier,dossierInformation);
+            ajouterPhoto(it.fileInfo().filePath(),s+".txt");
+        }
+        it.next();
+    }
     mIdentificationsNonReconnus.shuffle();
 }
 

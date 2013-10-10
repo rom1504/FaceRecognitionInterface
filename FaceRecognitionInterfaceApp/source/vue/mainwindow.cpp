@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QPixmapCache>
+#include <QDirIterator>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -12,9 +13,10 @@
 #include "vue/progressdialog.h"
 #include "vue/personsearch.h"
 
-MainWindow::MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent) :
+MainWindow::MainWindow(QString directoryListFile, QString cheminPhotos, QString cheminPhotoDecoupees, QString cheminInformation, QString cheminIntermediaire, QString cheminModele, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    mDirectoryListFile(directoryListFile),
     mCheminPhotos(cheminPhotos),
     mCheminPhotoDecoupees(cheminPhotoDecoupees),
     mCheminInformation(cheminInformation),
@@ -57,34 +59,41 @@ MainWindow::MainWindow(QString cheminPhotos,QString cheminPhotoDecoupees,QString
 
 void MainWindow::detect()
 {
-    QDir dir(mCheminPhotos);
-    int photoFilesNumber=dir.entryList().count()-2;
-    int informationsFilesNumber;
-    QDir dir2;
-    if(dir2.exists(mCheminInformation))
-    {
-        dir2.cd(mCheminInformation);
-        informationsFilesNumber=dir2.entryList().count()-2;
-    }
-    else informationsFilesNumber=0;
-    int remaining=photoFilesNumber-informationsFilesNumber;
-    Q_ASSERT(remaining>=0);
-    ProgressDialog * progressDialog=new ProgressDialog("Détection","Détection en cours...",0, int(double(remaining)*1.5),1, this);
+
+    ProgressDialog * progressDialog=new ProgressDialog("Détection","Détection en cours...",0,10,1, this);
     progressDialog->start();
     QProcess *process = new QProcess();
     double *avancement=new double(progressDialog->value());
     int *num=new int(0);
-    connect(process,&QProcess::readyReadStandardOutput,[progressDialog,num,remaining,avancement,process,this](){
+    int remaining=10;
+    connect(process,&QProcess::readyReadStandardOutput,[progressDialog,num,avancement,&remaining,process,this](){
         // voir pour faire péter la compilation de la chaine : ce serait plutôt une étape d'installation
         if(progressDialog->value()>=progressDialog->maximum()-1) progressDialog->setMaximum(int(double(progressDialog->maximum())*1.2));
+        if(process->readAllStandardOutput().trimmed()=="detection:")
+        {
+            int photoFilesNumber=0;
+            QDirIterator it(mCheminPhotos, QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
+            while(it.hasNext()) {if(it.fileInfo().isFile()) photoFilesNumber++;it.next();}
+
+            int informationsFilesNumber=0;
+            QDir dir2;
+            if(dir2.exists(mCheminInformation))
+            {
+                QDirIterator it(mCheminInformation, QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
+                while(it.hasNext()) {if(it.fileInfo().isFile()) informationsFilesNumber++;it.next();}
+            }
+
+            remaining=photoFilesNumber-informationsFilesNumber;
+            Q_ASSERT(remaining>=0);
+            progressDialog->setMaximum(int(double(remaining)*1.5));
+        }
         (*num)++;
         (*avancement)+=(*num)>remaining ? 0.2 : 1.0;
         progressDialog->setValue(int(*avancement));
         // améliorable en lisant le début du découpage et en divisant le progrés par 2 ou qq chose comme ça
-        process->readAllStandardOutput();
         // faire une estimation initiale via fileNumber*2 puis une fois qu'on a récupéré les infos ajuster via setMaximum : non inutile, je crois que ce qui prends du temps c'est la première partie, on peut considérer qu'il reste fileNumber/10 étape ensuite, qu'on peut remplir d'un coup
     });
-    process->start("bash facedetect/source/chaineSimplifie.sh "+mCheminPhotos+" "+mCheminPhotoDecoupees+" "+mCheminInformation);
+    process->start("bash facedetect/source/chaineSimplifie.sh "+mDirectoryListFile+" "+mCheminPhotos+" "+mCheminPhotoDecoupees+" "+mCheminInformation);
     void (QProcess:: *f)(int) = &QProcess::finished;
     connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();

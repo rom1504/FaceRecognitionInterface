@@ -8,6 +8,7 @@
 Controleur::Controleur(QObject *parent) :
     QObject(parent)
 {
+    QString directoryListFile="donnees/directoryList.txt";
     QString cheminPhotos="donnees/photos";
     QString cheminPhotoDecoupees="donnees/photosDecoupees";
     QString cheminInformation="donnees/informations";
@@ -15,7 +16,7 @@ Controleur::Controleur(QObject *parent) :
     QString cheminModele="donnees/modele";
 
 
-    mMainWindow=new MainWindow(cheminPhotos,cheminPhotoDecoupees,cheminInformation,cheminIntermediaire,cheminModele);
+    mMainWindow=new MainWindow(directoryListFile,cheminPhotos,cheminPhotoDecoupees,cheminInformation,cheminIntermediaire,cheminModele);
     mPhotos=new Photos();
     mPhotos->chargerPhotos(cheminPhotos,cheminInformation);
     IdentificationEditor::mPersonnes=new SignalListAdapter<QString>(&(mPhotos->personnes()));
