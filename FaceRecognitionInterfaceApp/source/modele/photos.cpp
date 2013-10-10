@@ -94,11 +94,12 @@ void Photos::chargerPhotos(QString dossier, QString dossierInformation)
     QDirIterator it(dossier, QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
     while(it.hasNext())
     {
-        if(it.fileInfo().isFile())
+        QFileInfo info=it.fileInfo();
+        if(info.isFile())
         {
-            QString s=it.fileInfo().filePath();
+            QString s=info.filePath();
             s.replace(dossier,dossierInformation);
-            ajouterPhoto(it.fileInfo().filePath(),s+".txt");
+            ajouterPhoto(info.filePath(),s+".txt");
         }
         it.next();
     }

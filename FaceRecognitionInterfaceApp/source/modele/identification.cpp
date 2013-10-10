@@ -108,5 +108,5 @@ void Identification::ignorer()
 QString Identification::toQString() const
 {
     QString tab=QString("\t");
-    return QString::number(mRect.top())+tab+QString::number(mRect.left())+tab+QString::number(mRect.width())+tab+QString::number(mRect.height())+tab+mNomFichierDecoupee+tab+mPersonne+tab+(mValide ? "1" : "0")+tab+(mIgnore ? "1" : "0");
+    return QString::number(mRect.left())+tab+QString::number(mRect.top())+tab+QString::number(mRect.width())+tab+QString::number(mRect.height())+tab+mNomFichierDecoupee+tab+mPersonne+tab+(mValide ? "1" : "0")+tab+(mIgnore ? "1" : "0");
 }

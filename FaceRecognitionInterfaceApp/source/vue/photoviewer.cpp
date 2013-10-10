@@ -43,13 +43,18 @@ void PhotoViewer::paintEvent(QPaintEvent * event)
     if(mCurrentIdentification!=nullptr)
     {
         QRect rect=resizedRect(mCurrentIdentification->rect());
-//        painter.drawRect(rect);
-        double a=double(rect.width())/2.0;
-        a*=a;
-        double b=double(rect.height())/2.0;
-        b*=b;
-        double r=sqrt(a+b)/1.2;
-        painter.drawEllipse(rect.center(),int(r),int(r));
+        bool showRect=false;
+        if(showRect) painter.drawRect(rect);
+        else
+        {
+            double a=double(rect.width())/2.0;
+            a*=a;
+            double b=double(rect.height())/2.0;
+            b*=b;
+            double r=sqrt(a+b)/1.2;
+            painter.drawEllipse(rect.center(),int(r),int(r));
+        }
+
         QPoint ap=rect.center()+QPoint(-10,double(rect.height())/2.0+25);
         painter.drawText(ap,mCurrentIdentification->personne());
     }
