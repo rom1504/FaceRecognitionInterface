@@ -95,7 +95,8 @@ void Photos::chargerPhotos(QString dossier, QString dossierInformation)
     while(it.hasNext())
     {
         QFileInfo info=it.fileInfo();
-        if(info.isFile())
+        QString ext;
+        if(info.isFile() && ((ext=it.fileInfo().fileName().section(".",-1).toLower())=="jpeg" || ext=="png" || ext=="jpg"))
         {
             QString s=info.filePath();
             s.replace(dossier,dossierInformation);

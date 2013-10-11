@@ -73,7 +73,8 @@ void MainWindow::detect()
         {
             int photoFilesNumber=0;
             QDirIterator it(mCheminPhotos, QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
-            while(it.hasNext()) {if(it.fileInfo().isFile()) photoFilesNumber++;it.next();}
+            QString ext;
+            while(it.hasNext()) {if(it.fileInfo().isFile() && ((ext=it.fileInfo().fileName().section(".",-1).toLower())=="jpeg" || ext=="png" || ext=="jpg")) photoFilesNumber++;it.next();}
 
             int informationsFilesNumber=0;
             QDir dir2;
