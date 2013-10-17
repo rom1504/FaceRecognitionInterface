@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QString directoryListFile,QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,QWidget *parent = 0);
+    explicit MainWindow(QString directoryListFile,QString cheminPhotos,QString cheminPhotoDecoupees,QString cheminInformation,QString cheminIntermediaire,QString cheminModele,double threshold,QWidget *parent = 0);
     ~MainWindow();
 
     void setAdapterIdentificationNonReconnues(SignalListAdapter<Identification*> * adapter);
@@ -58,6 +58,7 @@ private:
     QString mCheminInformation;
     QString mCheminIntermediaire;
     QString mCheminModele;
+    double mThreshold;
 };
 
 #endif // MAINWINDOW_H

@@ -13,7 +13,7 @@
 #include "vue/progressdialog.h"
 #include "vue/personsearch.h"
 
-MainWindow::MainWindow(QString directoryListFile, QString cheminPhotos, QString cheminPhotoDecoupees, QString cheminInformation, QString cheminIntermediaire, QString cheminModele, QWidget *parent) :
+MainWindow::MainWindow(QString directoryListFile, QString cheminPhotos, QString cheminPhotoDecoupees, QString cheminInformation, QString cheminIntermediaire, QString cheminModele, double threshold, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     mDirectoryListFile(directoryListFile),
@@ -21,7 +21,8 @@ MainWindow::MainWindow(QString directoryListFile, QString cheminPhotos, QString 
     mCheminPhotoDecoupees(cheminPhotoDecoupees),
     mCheminInformation(cheminInformation),
     mCheminIntermediaire(cheminIntermediaire),
-    mCheminModele(cheminModele)
+    mCheminModele(cheminModele),
+    mThreshold(threshold)
 {
     showMaximized();
     ui->setupUi(this);
@@ -38,7 +39,7 @@ MainWindow::MainWindow(QString directoryListFile, QString cheminPhotos, QString 
 
 
 
-    QPixmapCache::setCacheLimit(1000000000);
+    QPixmapCache::setCacheLimit(1000000000);// tjs aussi lent
 
 
     connect(ui->actionAfficher_les_identifications_non_reconnues,&QAction::triggered,[this](){ui->stackedWidget->setCurrentIndex(0);});
@@ -113,7 +114,7 @@ void MainWindow::recognize()
         progressDialog->setValue(progressDialog->value()+1);
         process->readAllStandardOutput();
     });
-    process->start("bash facerecognition/source/chaineSimplifie.sh "+mCheminInformation+" "+mCheminPhotoDecoupees+" "+mCheminModele+" "+mCheminIntermediaire);
+    process->start("bash facerecognition/source/chaineSimplifie.sh "+mCheminInformation+" "+mCheminPhotoDecoupees+" "+mCheminModele+" "+mCheminIntermediaire+" "+QString::number(mThreshold));
     void (QProcess:: *f)(int) = &QProcess::finished;
     connect(process,f,[this,progressDialog](int){
         emit reloadPhotos();

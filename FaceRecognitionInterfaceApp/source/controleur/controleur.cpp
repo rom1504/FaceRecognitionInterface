@@ -14,9 +14,10 @@ Controleur::Controleur(QObject *parent) :
     QString cheminInformation="donnees/informations";
     QString cheminIntermediaire="donnees/intermediaire";
     QString cheminModele="donnees/modele";
+    double threshold=-1;
 
 
-    mMainWindow=new MainWindow(directoryListFile,cheminPhotos,cheminPhotoDecoupees,cheminInformation,cheminIntermediaire,cheminModele);
+    mMainWindow=new MainWindow(directoryListFile,cheminPhotos,cheminPhotoDecoupees,cheminInformation,cheminIntermediaire,cheminModele,threshold);
     mPhotos=new Photos();
     mPhotos->chargerPhotos(cheminPhotos,cheminInformation);
     IdentificationEditor::mPersonnes=new SignalListAdapter<QString>(&(mPhotos->personnes()));
